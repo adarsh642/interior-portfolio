@@ -281,11 +281,11 @@ export default function Home() {
                   <div className="flex flex-col gap-3 text-[#0D1B2A] dark:text-gray-200">
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-xl text-[#F77F28]">location_on</span>
-                      <p className="text-sm">Your complete office address here (City, Area, State, Pincode)</p>
+                      <p className="text-sm">36, First Floor, Sai Dham shopping plaza, Asha Nagar, PK Road, Mulund (W)-400080</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-xl text-[#F77F28]">phone</span>
-                      <p className="text-sm">Your phone number here</p>
+                      <p className="text-sm">+91 99308 66851</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-xl text-[#F77F28]">schedule</span>
@@ -301,7 +301,7 @@ export default function Home() {
                 <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="full-name">Full Name</label>
-                    <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="full-name" placeholder="John Doe" type="text" />
+                    <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="full-name" placeholder="Enter your name" type="text" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="email">Email Address</label>
@@ -314,17 +314,30 @@ export default function Home() {
                   <div>
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="project-type">Project Type</label>
                     <select className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="project-type">
+                      <option value="">Select</option>
                       <option>Home Interior</option>
-                      <option>Commercial</option>
+                      <option>Commercial Interior</option>
+                      <option>Residential Interior</option>
+                      <option>Office Interior</option>
                       <option>Renovation</option>
+                      <option>3D Design</option>
+                      <option>Consultation</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="budget">Budget Range</label>
                     <select className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="budget">
-                      <option>₹1-5 Lakhs</option>
-                      <option>₹5-10 Lakhs</option>
-                      <option>₹10 Lakhs+</option>
+                      <option value="">Select Range</option>
+                      <option>₹1-3 Lakhs</option>
+                      <option>₹3-5 Lakhs</option>
+                      <option>₹5-8 Lakhs</option>
+                      <option>₹8-10 Lakhs</option>
+                      <option>₹10-15 Lakhs</option>
+                      <option>₹15-20 Lakhs</option>
+                      <option>₹20-30 Lakhs</option>
+                      <option>₹30-50 Lakhs</option>
+                      <option>₹50 Lakhs+</option>
+                      <option>Custom Budget</option>
                     </select>
                   </div>
                   <div className="sm:col-span-2">
@@ -340,17 +353,16 @@ export default function Home() {
           </div>
 
           <div className="mb-16 lg:mb-24 bg-white/50 dark:bg-gray-800/30 rounded-2xl p-8 lg:p-12 shadow-xl">
-            <div className="text-center mb-10">
-              <p className="text-accent text-sm font-bold uppercase tracking-wider mb-3">Testimonials</p>
+            <div className="mb-10">
+              <p className="text-accent text-lg font-bold uppercase tracking-wider mb-3 text-center">Testimonials</p>
               <h2 className="font-[family-name:var(--font-playfair)] text-[#1A2A44] dark:text-white text-3xl sm:text-4xl font-bold">What Our Clients Say</h2>
-              <div className="w-20 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+              <div className="w-20 h-1 bg-accent mt-4 rounded-full"></div>
             </div>
             
             {/* Reviews Carousel */}
             <div className="relative mb-12">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <Image className="size-16 rounded-full object-cover mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc9NVmH2zBRrpJRlnJjbZ92MF_XPEtIYAZvvON01C7sxP9v09z1qZ5WZtafSlK_Fq3aJJsNFmsADWSvHgzCwSSAdMl5W50DgJns7xGtd3DEQIwdC753Xpr8KznlvFjEA-Ha_IUvbG1ZgUFdqxTexDMGEACDYWOxrML2bgmdRcY0NSHuL7kbfMCvvT2Qos4f6gZ6_ONPibmEmQEoAZ1w8qb88gG01mBidRG84q0d6Ti7YCh8m8V-QrVPLrfXo9-CfNrLYxv0Dyyd74_" alt="Client photo" width={64} height={64} />
                   <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">Sarah Johnson</h3>
                   <div className="flex text-yellow-500 my-2">
                     {[...Array(5)].map((_, i) => (
@@ -360,7 +372,6 @@ export default function Home() {
                   <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;Bindu Designs transformed our house into a home. Their attention to detail is impeccable.&quot;</p>
                 </div>
                 <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <Image className="size-16 rounded-full object-cover mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdkzuQOBY00PsqAWq8hwZF13OzzJlusfdox1eRWveNK5YFKtJWt5GjqUrRfDQ52owBxglIXoNd2yjheicaBW5B__4HtiIhgN8G7Xpw7SdMt2ZzUnyKUqgp4HHZVDy5GCGA02sC_g7jgkK0kbBtvDPSCE_wCgZlA9TKDmEEQ3XHrlRj7g-N6LndM9rzMJB0JOMDHdq6w3BlQQ13mygE847xIdgDKmU-AOq5xl6-UC-pyEAbWXCzW7RXPUGM6l8lIYEtXUJrT4MlK4am" alt="Client photo" width={64} height={64} />
                   <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">Michael Chen</h3>
                   <div className="flex text-yellow-500 my-2">
                     {[...Array(5)].map((_, i) => (
@@ -370,7 +381,6 @@ export default function Home() {
                   <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;The commercial space they designed for us has been a game-changer for our business.&quot;</p>
                 </div>
                 <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <Image className="size-16 rounded-full object-cover mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4GceI6IFmxG2vY8AS9CpIBg8doHQzKWQzT5rddqKn0HCtCO0dSfgBW9yKOcWG-bGaVBWDFhWc86u_zWuxaXf95O2zTjWLEQNIzyVLHzd5CJWYrWmSl1Bhiu3FsxKTqNkb9fLwOueqQM87Klfs3tnwucmC05dnZanJD9LjNaDNXxGM5QXNrtDf1f3_kWKSjIuRkN_Bth2gtDtS1BDrNZLe5MjExJs1Kc-N6Dsf_mMk7qY6thkx3UQ2AKpTOWzodQKLNB8RvQh306in" alt="Client photo" width={64} height={64} />
                   <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">David Rodriguez</h3>
                   <div className="flex text-yellow-500 my-2">
                     {[...Array(5)].map((_, i) => (
@@ -403,7 +413,7 @@ export default function Home() {
               <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-name">Your Name</label>
-                  <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="reviewer-name" placeholder="John Doe" type="text" />
+                  <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="reviewer-name" placeholder="Enter your name" type="text" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-email">Email Address</label>
@@ -446,6 +456,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Achievements Section */}
+      <section className="w-full bg-background-light dark:bg-background-dark py-16 sm:py-20 lg:py-24 border-t border-neutral/20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8 lg:gap-x-12">
+            <div className="flex flex-col items-center text-center">
+              <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">10+</p>
+              <div className="mt-3 h-0.5 w-16 bg-primary"></div>
+              <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Years Experience</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">120+</p>
+              <div className="mt-3 h-0.5 w-16 bg-primary"></div>
+              <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Completed Projects</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">100+</p>
+              <div className="mt-3 h-0.5 w-16 bg-primary"></div>
+              <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Happy Clients</p>
+            </div>
+            <div className="flex flex-col items-center text-center sm:col-start-1 lg:col-start-auto lg:col-span-1 lg:col-start-2">
+              <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">15k+</p>
+              <div className="mt-3 h-0.5 w-16 bg-primary"></div>
+              <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">3D Models Designed</p>
+            </div>
+            <div className="flex flex-col items-center text-center lg:col-span-1">
+              <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">98%</p>
+              <div className="mt-3 h-0.5 w-16 bg-primary"></div>
+              <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Client Satisfaction</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Visit Our Design Studio Section */}
       <section className="bg-white dark:bg-gray-900 py-16 lg:py-24">
         <div className="px-4 sm:px-6 lg:px-10 xl:px-40 max-w-[1200px] mx-auto">
@@ -455,7 +498,7 @@ export default function Home() {
           </div>
           <div className="w-full h-80 lg:h-96 rounded-xl overflow-hidden shadow-xl">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119065.9899388373!2d79.00169135064613!3d21.16106560946777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c0a5a31faf13%3A0x19b37d06d0bb3e2b!2sNagpur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.0686779345804!2d79.04441007522133!3d21.145771980523745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c7271b0ecccb%3A0xe60d01b8c59c8b41!2sLaxmi%20Nagar%2C%20Nagpur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1732011000000!5m2!1sen!2sin" 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -469,63 +512,220 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary">
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
-          <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold text-white sm:text-5xl">Let&apos;s Design Your Dream Space</h2>
-          <p className="mt-4 text-lg leading-6 text-neutral">Get in touch to start your journey with us.</p>
-          <a href="#contact" className="mt-8 flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-8 bg-[#25D366] text-white text-base font-bold shadow-md hover:brightness-110 transition-all mx-auto w-fit">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
-            <span className="truncate">For Enquiry</span>
-          </a>
+      <section className="relative bg-gradient-to-br from-primary via-accent to-primary py-20 sm:py-24 lg:py-28 overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold text-white sm:text-5xl lg:text-6xl leading-tight">
+              Let&apos;s Design Your Dream Space
+            </h2>
+            <p className="mt-6 text-xl leading-8 text-white/90">
+              Get in touch to start your journey with us. Transform your vision into reality.
+            </p>
+            
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="https://wa.me/919930866851" className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 text-lg font-bold text-primary shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl w-full sm:w-auto">
+                <svg className="w-6 h-6 text-[#25D366] group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                <span>WhatsApp Enquiry</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              
+              <a href="tel:+919930866851" className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white bg-transparent px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-white hover:text-primary hover:scale-105 w-full sm:w-auto">
+                <span className="material-symbols-outlined text-2xl">call</span>
+                <span>Call Us Now</span>
+              </a>
+            </div>
+            
+            <p className="mt-8 text-sm text-white/80">
+              <span className="inline-flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">schedule</span>
+                Available Mon-Sun, 10:00 AM - 7:00 PM
+              </span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Connect With Us Section */}
+      <section className="bg-background-light dark:bg-background-dark py-16 sm:py-20 lg:py-24 border-t border-neutral/20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold text-text-light dark:text-text-dark sm:text-5xl">Connect With Us</h2>
+            <p className="mt-4 text-lg text-text-light/70 dark:text-text-dark/70">Follow us on social media for inspiration and updates</p>
+          </div>
+          
+          <div className="flex justify-center items-center gap-6 sm:gap-8">
+            {/* Facebook */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Facebook">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            {/* Instagram */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Instagram">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#E4405F] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+
+            {/* Twitter/X */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Twitter">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#1DA1F2] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+              </svg>
+            </a>
+
+            {/* LinkedIn */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#0A66C2] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+
+            {/* Pinterest */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Pinterest">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#E60023] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
+              </svg>
+            </a>
+
+            {/* YouTube */}
+            <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="YouTube">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#FF0000] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-background-light dark:bg-background-dark border-t border-neutral/50 dark:border-neutral/20">
+      <footer className="bg-gradient-to-b from-background-light to-neutral/10 dark:from-background-dark dark:to-neutral/5 border-t-2 border-accent/30">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="col-span-2 md:col-span-1">
-              <h2 className="text-2xl font-bold font-[family-name:var(--font-cormorant)]">Bindu Designs</h2>
-              <p className="mt-4 text-sm text-text-light/70 dark:text-text-dark/70">Creating timeless interiors with a modern, elegant touch.</p>
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+            {/* Company Info */}
+            <div className="lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="size-10 text-primary dark:text-accent">
+                  <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <g clipPath="url(#clip0_6_543)">
+                      <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor" />
+                      <path clipRule="evenodd" d="M7.24189 26.4066C7.31369 26.4411 7.64204 26.5637 8.52504 26.3738C9.59462 26.1438 11.0343 25.5311 12.7183 24.4963C14.7583 23.2426 17.0256 21.4503 19.238 19.238C21.4503 17.0256 23.2426 14.7583 24.4963 12.7183C25.5311 11.0343 26.1438 9.59463 26.3738 8.52504C26.5637 7.64204 26.4411 7.31369 26.4066 7.24189C26.345 7.21246 26.143 7.14535 25.6664 7.1918C24.9745 7.25925 23.9954 7.5498 22.7699 8.14278C20.3369 9.32007 17.3369 11.4915 14.4142 14.4142C11.4915 17.3369 9.32007 20.3369 8.14278 22.7699C7.5498 23.9954 7.25925 24.9745 7.1918 25.6664C7.14534 26.143 7.21246 26.345 7.24189 26.4066ZM29.9001 10.7285C29.4519 12.0322 28.7617 13.4172 27.9042 14.8126C26.465 17.1544 24.4686 19.6641 22.0664 22.0664C19.6641 24.4686 17.1544 26.465 14.8126 27.9042C13.4172 28.7617 12.0322 29.4519 10.7285 29.9001L21.5754 40.747C21.6001 40.7606 21.8995 40.931 22.8729 40.7217C23.9424 40.4916 25.3821 39.879 27.0661 38.8441C29.1062 37.5904 31.3734 35.7982 33.5858 33.5858C35.7982 31.3734 37.5904 29.1062 38.8441 27.0661C39.879 25.3821 40.4916 23.9425 40.7216 22.8729C40.931 21.8995 40.7606 21.6001 40.747 21.5754L29.9001 10.7285ZM29.2403 4.41187L43.5881 18.7597C44.9757 20.1473 44.9743 22.1235 44.6322 23.7139C44.2714 25.3919 43.4158 27.2666 42.252 29.1604C40.8128 31.5022 38.8165 34.012 36.4142 36.4142C34.012 38.8165 31.5022 40.8128 29.1604 42.252C27.2666 43.4158 25.3919 44.2714 23.7139 44.6322C22.1235 44.9743 20.1473 44.9757 18.7597 43.5881L4.41187 29.2403C3.29027 28.1187 3.08209 26.5973 3.21067 25.2783C3.34099 23.9415 3.8369 22.4852 4.54214 21.0277C5.96129 18.0948 8.43335 14.7382 11.5858 11.5858C14.7382 8.43335 18.0948 5.9613 21.0277 4.54214C22.4852 3.8369 23.9415 3.34099 25.2783 3.21067C26.5973 3.08209 28.1187 3.29028 29.2403 4.41187Z" fill="currentColor" fillRule="evenodd" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_6_543">
+                        <rect fill="white" height="48" width="48" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-cormorant)] text-text-light dark:text-text-dark">Bindu Designs</h2>
+              </div>
+              <p className="text-base text-text-light/70 dark:text-text-dark/70 leading-relaxed">Creating timeless interiors with a modern, elegant touch.</p>
             </div>
+
+            {/* Quick Links */}
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-wider">Links</h3>
-              <ul className="mt-4 space-y-2">
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">About</a></li>
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">Portfolio</a></li>
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">Contact</a></li>
+              <h3 className="text-base font-bold uppercase tracking-wider text-text-light dark:text-text-dark mb-6 flex items-center gap-2">
+                <span className="w-8 h-0.5 bg-accent"></span>
+                Links
+              </h3>
+              <ul className="space-y-3">
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    Portfolio
+                  </a>
+                </li>
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#contact">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    Contact
+                  </a>
+                </li>
               </ul>
             </div>
+
+            {/* Services */}
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-wider">Services</h3>
-              <ul className="mt-4 space-y-2">
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">Residential</a></li>
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">Commercial</a></li>
-                <li><a className="text-sm text-text-light/70 dark:text-text-dark/70 hover:text-accent" href="#">Renovation</a></li>
+              <h3 className="text-base font-bold uppercase tracking-wider text-text-light dark:text-text-dark mb-6 flex items-center gap-2">
+                <span className="w-8 h-0.5 bg-accent"></span>
+                Services
+              </h3>
+              <ul className="space-y-3">
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#services">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    Residential
+                  </a>
+                </li>
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#services">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    Commercial
+                  </a>
+                </li>
+                <li>
+                  <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#services">
+                    <span className="material-symbols-outlined text-sm">chevron_right</span>
+                    Renovation
+                  </a>
+                </li>
               </ul>
             </div>
+
+            {/* Contact Info */}
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-wider">Contact</h3>
-              <ul className="mt-4 space-y-2">
-                <li className="flex items-center gap-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                  <span className="material-symbols-outlined text-base">call</span>
-                  <span>(123) 456-7890</span>
+              <h3 className="text-base font-bold uppercase tracking-wider text-text-light dark:text-text-dark mb-6 flex items-center gap-2">
+                <span className="w-8 h-0.5 bg-accent"></span>
+                Contact
+              </h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="tel:+919930866851" className="group flex items-start gap-3 text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent transition-colors duration-300">
+                    <span className="material-symbols-outlined text-xl text-primary dark:text-accent mt-0.5 group-hover:scale-110 transition-transform">call</span>
+                    <span>+91 99308 66851</span>
+                  </a>
                 </li>
-                <li className="flex items-center gap-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                  <span className="material-symbols-outlined text-base">email</span>
-                  <span>hello@bindu.design</span>
+                <li>
+                  <a href="mailto:bindudesigns51@gmail.com" className="group flex items-start gap-3 text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent transition-colors duration-300">
+                    <span className="material-symbols-outlined text-xl text-primary dark:text-accent mt-0.5 group-hover:scale-110 transition-transform">email</span>
+                    <span>bindudesigns51@gmail.com</span>
+                  </a>
                 </li>
-                <li className="flex items-start gap-2 text-sm text-text-light/70 dark:text-text-dark/70">
-                  <span className="material-symbols-outlined text-base mt-0.5">location_on</span>
-                  <span>123 Design Lane,<br />New York, NY 10001</span>
+                <li className="flex items-start gap-3 text-base text-text-light/70 dark:text-text-dark/70">
+                  <span className="material-symbols-outlined text-xl text-primary dark:text-accent mt-0.5">location_on</span>
+                  <span>36, First Floor, Sai Dham shopping plaza,<br />Asha Nagar, PK Road, Mulund (W)-400080</span>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="mt-12 border-t border-neutral/50 dark:border-neutral/20 pt-8 text-center text-sm text-text-light/50 dark:text-text-dark/50">
-            <p>© 2024 Bindu Designs. All Rights Reserved.</p>
+
+          {/* Bottom Bar */}
+          <div className="mt-12 pt-8 border-t border-accent/20">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <p className="text-sm text-text-light/60 dark:text-text-dark/60">
+                © 2024 Bindu Designs. All Rights Reserved.
+              </p>
+              <div className="flex gap-6 text-sm">
+                <a href="#" className="text-text-light/60 dark:text-text-dark/60 hover:text-primary dark:hover:text-accent transition-colors">Privacy Policy</a>
+                <a href="#" className="text-text-light/60 dark:text-text-dark/60 hover:text-primary dark:hover:text-accent transition-colors">Terms of Service</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
