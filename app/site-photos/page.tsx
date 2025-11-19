@@ -1,0 +1,232 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+
+export default function SitePhotos() {
+  const [selectedFilter, setSelectedFilter] = useState("All Photos");
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  const filters = ["All Photos", "Living Room", "Bedroom", "Kitchen", "Before", "After", "3D Designs"];
+
+  const photos = [
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuB6QQTFFY3ts0M-4enJ9dA27hJJwzq4Te89j9afZE7uwHQL1x-gbOwmLKECDnhSZB2SQBUcJ9FjwBypoNR3HHVeqLZSkDWA_5EKu00j7b9B74yyS8HkiVwshPrclUDi-Z0ixoHYc4E1oqE0ZB1Lc42nzNacbt31EdQIF5N5woMRhHs3iiYqMS8Vt0KHZzo5W2OupfZZ9CJmNMoMnDhHqWy8CbYfDCjDDrGZYhhYKkR9SbpPr--tX_kz6VOpTmaA0bVQLEjn9uUVTocX",
+      alt: "A bright, modern living room with a white sofa and minimalist decor.",
+      category: "Living Room"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWDNugafda7BxumtUWPqfpM7dA1q3jFNebntB69_4EP0M_XT_XZ9v34RLnnYKO7eaIiOmkfTIDQmIccdzI26ZbwRA7yhHyuuV9Xwf9xf5lJpfvU5Xew4iiZ44vqAnAPLqtTQU3IWq1sBZTJx8mSVsKhgm_nzidzJzvzXv9Uo7VNHsooBZoJHebIk-Sd-_sU9YzAFftFoUyL9HEdqgJROFBTHNftk6z2VYzTayX0afhLP850DH2P3CWFRP7w2Xa2kiTX0P_mPwIIjfa",
+      alt: "Elegant living space with a blue velvet sofa and gold accents.",
+      category: "Living Room"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYTHCr45PiLNsr8MiwfyzzU05nWUOMfoKowDsp-tUJrnFpz30YrLo-6DeyLV_8E9tCfLrZsdLQER511VyNeHmuqxCUOfZYbGDDVbXF_YIOCoN0qvN17xAoFzNg59I_LxoGM2Q-bgb27MGbMkLZJ1FDunIcYIlu17UN3VVYc8L5rmFwYIgOLq4QYaDtAY-bKED28YiLfGlDvNrXRGIzY6Swx7n3U28BJDEc8KIRYVyL2zMxLm12cC6X7k76Z_p73PX7BhnDHyMgnKOH",
+      alt: "A minimalist chair in a sunlit room with wooden floors.",
+      category: "Living Room"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBC6bv35kLvuGmgkqhrs2HqAoGzcryuDPSHlWAYJEhU6A064WDCcqhnISxlMRNClJ_2gt-g_JwjUFU0wWP81pBkD2gM6RDH6g1YYdp_WbTS_Dfv9KYhOW5L0hJHXiPfVjoL_mvLglB276QU6c2ucZBc4Gjgti_W1jUT7o0bLhkvaKpJN03mct6FufPi8E8USjL5EV6XEjG164q5RqNl_1X6wj3cfxqQ5HUnh6zgjlmASrCYwYLj2_I-OXCXnBkfNzLfaEDYXBRoLS9g",
+      alt: "A sleek, modern bathroom with a standalone bathtub and marble walls.",
+      category: "Bedroom"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCj9HJ3Zqrzr5uCN74snH9ASIc6OMQjfGd2ZeF6Kr0SxZUiSeuLj9dPokiyp7TU954X_aB31gvB7NE4MRZe4XrOZQEUbgqDibhRE_2g5D8OrfzQxqi_tPwEfPUdaepO4uTOC42zFL4FKpEQsMEPfgWznTFse4iR5-NvvayvA4SHsfL2BHJgcH5GmZJvu4vORoIMNxgVWRrD269wmH_iTaA1uhqXbEataJU5RgGCq7ilkOkrzAh7Vvljd67UhD1Scy7ULW3wot7ujlcF",
+      alt: "Cozy bedroom with a large bed, plush pillows, and neutral tones.",
+      category: "Bedroom"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAH-EE08V2OL_kRvqCmI7oR5QAXdlSwSA4pqRYU0rovUrw02bp0dUIeeBZszhXUftWiajmkzd2KdxSEpszsQ2gDuCFwvDNIpVnfn2Zw3ePj3YHyrdNpWpDkJk36Sg5Y0oGjY8dFE1oSd0D2nmgEs7-_TDTV2p8JWTDieCYyzDU5NjYS8qxewXtYAsWuDZ9nVnNdJRPLeMas9ssJenwU0rRUbkbKq634F6-5VoYWA8FDuejUrQ5n1IKMzAnhjmU2JqB9I_PzpoNfREXe",
+      alt: "A spacious bedroom with large windows and a view of the outside.",
+      category: "Bedroom"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDSIUw1pr49j_ja5cPPA7Ya07MIUolVeKlf-3MmvyigiGHNxWXMGpuVMEW3aC_rWGJ11uBDcCBPpbF_FjGZ3tcixmsEAmNhNMimg84RZ9fYvBvuEvm6t6x8YJ3niUwRY1iteOKooibrOHjdEUTPQrP8I-26TacEH3qS7XneXsw-mnJYhQNzptPIeeq-uDj-aGOregoH2dXJft4WPZKZCRo-w1M-kXsvUj7JUbS29fIrW4CmYEUJMbWLk33W5RdUDUd9PRXKstnVmIgK",
+      alt: "Exterior view of a modern house with a clean architectural design.",
+      category: "After"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfQPeKYAQjylrFDk9E3mFu6GV4yg2jju0oqV9ugfd65D8aa1Si2ghshmDT8eYKdSAZNT6xDEuhMMUTnTZjOvNN90UP05lyK94tfq2Ex9easp5MBmfI2xLqOyxDYWKnEtjojvGDU4k_YKaK5U_vsFGmor4HS6H9R4LDBNRtfJkoxaX2WrsqjzAdwNO7-YGEpKHK45PuTiXcwbsstDjyLmmwWyrYidimD9D9eIBohTzfkjLsJm13fUAdQzu7grXipRjnqQMR0cTy9dON",
+      alt: "Stylish kitchen with marble countertops and dark wood cabinets.",
+      category: "Kitchen"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBIvPjFr30KG7toCuVK8EubwjRJ363IfgCf--sKpfdNElET7c39JY50KjqWRaNT7eZP5VDO1JFHvRaDcziQBR6CictulhnfuUSr6c3-0O0zAByQRdjo_Y2a1lk6AAHO1zAHe5VOKhi6mw9kvKuxie1zXMg56zfI81BCsB3S-Sl1j5XW6BYI_rE1OWRfHDssppCf16auLtnLiIwNxlV3Cs1jzMA-_VV_xDGuHE7vlRSnNYwwAXxsGUkChG9rrNgS65D-yyT3Dyb4fFNN",
+      alt: "Detail shot of a contemporary armchair and a side table with a lamp.",
+      category: "Living Room"
+    }
+  ];
+
+  const filteredPhotos = selectedFilter === "All Photos" 
+    ? photos 
+    : photos.filter(photo => photo.category === selectedFilter);
+
+  const handleNext = () => {
+    if (selectedImage !== null && selectedImage < filteredPhotos.length - 1) {
+      setSelectedImage(selectedImage + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (selectedImage !== null && selectedImage > 0) {
+      setSelectedImage(selectedImage - 1);
+    }
+  };
+
+  return (
+    <div className="relative w-full">
+      {/* Header */}
+      <header className="absolute top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center gap-4">
+              <div className="size-8 text-primary dark:text-accent">
+                <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                  <g clipPath="url(#clip0_6_543)">
+                    <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor" />
+                    <path clipRule="evenodd" d="M7.24189 26.4066C7.31369 26.4411 7.64204 26.5637 8.52504 26.3738C9.59462 26.1438 11.0343 25.5311 12.7183 24.4963C14.7583 23.2426 17.0256 21.4503 19.238 19.238C21.4503 17.0256 23.2426 14.7583 24.4963 12.7183C25.5311 11.0343 26.1438 9.59463 26.3738 8.52504C26.5637 7.64204 26.4411 7.31369 26.4066 7.24189C26.345 7.21246 26.143 7.14535 25.6664 7.1918C24.9745 7.25925 23.9954 7.5498 22.7699 8.14278C20.3369 9.32007 17.3369 11.4915 14.4142 14.4142C11.4915 17.3369 9.32007 20.3369 8.14278 22.7699C7.5498 23.9954 7.25925 24.9745 7.1918 25.6664C7.14534 26.143 7.21246 26.345 7.24189 26.4066ZM29.9001 10.7285C29.4519 12.0322 28.7617 13.4172 27.9042 14.8126C26.465 17.1544 24.4686 19.6641 22.0664 22.0664C19.6641 24.4686 17.1544 26.465 14.8126 27.9042C13.4172 28.7617 12.0322 29.4519 10.7285 29.9001L21.5754 40.747C21.6001 40.7606 21.8995 40.931 22.8729 40.7217C23.9424 40.4916 25.3821 39.879 27.0661 38.8441C29.1062 37.5904 31.3734 35.7982 33.5858 33.5858C35.7982 31.3734 37.5904 29.1062 38.8441 27.0661C39.879 25.3821 40.4916 23.9425 40.7216 22.8729C40.931 21.8995 40.7606 21.6001 40.747 21.5754L29.9001 10.7285ZM29.2403 4.41187L43.5881 18.7597C44.9757 20.1473 44.9743 22.1235 44.6322 23.7139C44.2714 25.3919 43.4158 27.2666 42.252 29.1604C40.8128 31.5022 38.8165 34.012 36.4142 36.4142C34.012 38.8165 31.5022 40.8128 29.1604 42.252C27.2666 43.4158 25.3919 44.2714 23.7139 44.6322C22.1235 44.9743 20.1473 44.9757 18.7597 43.5881L4.41187 29.2403C3.29027 28.1187 3.08209 26.5973 3.21067 25.2783C3.34099 23.9415 3.8369 22.4852 4.54214 21.0277C5.96129 18.0948 8.43335 14.7382 11.5858 11.5858C14.7382 8.43335 18.0948 5.9613 21.0277 4.54214C22.4852 3.8369 23.9415 3.34099 25.2783 3.21067C26.5973 3.08209 28.1187 3.29028 29.2403 4.41187Z" fill="currentColor" fillRule="evenodd" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_6_543">
+                      <rect fill="white" height="48" width="48" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold font-[family-name:var(--font-cormorant)] text-text-light dark:text-text-dark">Bindu Designs</h2>
+            </div>
+            <nav className="hidden lg:flex items-center gap-8">
+              <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="/">Home</a>
+              <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="#">About</a>
+              <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="#">Services</a>
+              <a className="text-sm font-medium text-accent dark:text-accent transition-colors" href="/site-photos">Site Photos</a>
+              <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="#">Contact</a>
+            </nav>
+            <button className="hidden lg:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded h-10 px-6 bg-accent text-primary text-sm font-bold shadow-sm hover:opacity-90 transition-opacity">
+              <span className="truncate">Book Consultation</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pt-24 px-4 py-10 sm:px-6 md:px-8 lg:px-16 xl:px-24">
+        <div className="mx-auto max-w-7xl flex flex-col">
+          {/* Page Heading */}
+          <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+            <h1 className="font-[family-name:var(--font-playfair)] text-5xl font-bold text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">Site Photos</h1>
+            <p className="max-w-xl text-base text-text-light/70 dark:text-text-dark/70">A collection of real spaces designed and captured by Bindu Designs.</p>
+            <div className="mt-2 h-0.5 w-24 bg-accent"></div>
+          </div>
+
+          {/* Filter Chips */}
+          <div className="flex flex-wrap items-center justify-center gap-3 py-8">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setSelectedFilter(filter)}
+                className={`flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-5 text-sm font-medium shadow-sm transition-all ${
+                  selectedFilter === filter
+                    ? "bg-accent text-white shadow-md"
+                    : "border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark hover:bg-neutral/10 dark:hover:bg-gray-700"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          {/* Image Grid */}
+          <div className="grid grid-cols-1 gap-6 py-8 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredPhotos.map((photo, index) => (
+              <div
+                key={index}
+                className="group flex cursor-pointer flex-col"
+                onClick={() => setSelectedImage(index)}
+              >
+                <div className="h-auto w-full overflow-hidden rounded-xl bg-neutral/20 dark:bg-gray-800 shadow-md transition-shadow duration-300 hover:shadow-xl">
+                  <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                    <Image
+                      src={photo.url}
+                      alt={photo.alt}
+                      fill
+                      className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Meta Text */}
+          <div className="py-8">
+            <p className="text-center text-sm text-text-light/70 dark:text-text-dark/70">Images shown here are from completed interior design projects.</p>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full border-t border-neutral/50 dark:border-neutral/20 bg-neutral/10 dark:bg-gray-900/50">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 py-10 text-center sm:flex-row">
+          <p className="text-sm text-text-light/70 dark:text-text-dark/70">© Bindu Designs – All rights reserved.</p>
+          <div className="flex items-center justify-center gap-4">
+            <a className="text-text-light/70 dark:text-text-dark/70 transition-colors hover:text-accent dark:hover:text-accent" href="#">
+              <span className="material-symbols-outlined">alternate_email</span>
+            </a>
+            <a className="text-text-light/70 dark:text-text-dark/70 transition-colors hover:text-accent dark:hover:text-accent" href="#">
+              <svg aria-hidden="true" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path clipRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z" fillRule="evenodd" />
+              </svg>
+            </a>
+            <a className="text-text-light/70 dark:text-text-dark/70 transition-colors hover:text-accent dark:hover:text-accent" href="#">
+              <svg aria-hidden="true" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      {/* Photo Modal */}
+      {selectedImage !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl rounded-xl bg-white dark:bg-gray-900 p-4 shadow-2xl">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-4 -right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+            <div className="relative">
+              {selectedImage > 0 && (
+                <button
+                  onClick={handlePrev}
+                  className="absolute top-1/2 left-4 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white/50 dark:bg-gray-900/50 text-text-light dark:text-text-dark backdrop-blur-sm transition-transform hover:scale-110 hover:bg-white/75 dark:hover:bg-gray-900/75 z-10"
+                >
+                  <span className="material-symbols-outlined">arrow_back_ios_new</span>
+                </button>
+              )}
+              <div className="relative w-full overflow-hidden rounded-lg bg-neutral/20 dark:bg-gray-700" style={{ aspectRatio: "16/9" }}>
+                <Image
+                  src={filteredPhotos[selectedImage].url}
+                  alt={filteredPhotos[selectedImage].alt}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              {selectedImage < filteredPhotos.length - 1 && (
+                <button
+                  onClick={handleNext}
+                  className="absolute top-1/2 right-4 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white/50 dark:bg-gray-900/50 text-text-light dark:text-text-dark backdrop-blur-sm transition-transform hover:scale-110 hover:bg-white/75 dark:hover:bg-gray-900/75 z-10"
+                >
+                  <span className="material-symbols-outlined">arrow_forward_ios</span>
+                </button>
+              )}
+            </div>
+            <p className="mt-4 text-center text-sm text-text-light/70 dark:text-text-dark/70">{filteredPhotos[selectedImage].category}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
