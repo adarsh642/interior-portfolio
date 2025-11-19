@@ -17,8 +17,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Bindu Designs - Premium Interior Design",
-  description: "Premium Interior Design for Homes & Offices. Transforming spaces with elegance.",
+  title: "Bindu Designs",
+  description: "Interior Design for Homes & Offices. Transforming spaces with elegance.",
 };
 
 export default function RootLayout({
