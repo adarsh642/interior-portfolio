@@ -17,6 +17,9 @@ export default function SitePhotos() {
   const [uploadMethod, setUploadMethod] = useState<"url" | "file">("url");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
+  const [areaLength, setAreaLength] = useState("");
+  const [areaWidth, setAreaWidth] = useState("");
+  const [measurementUnit, setMeasurementUnit] = useState("ft");
 
   const filters = ["All Photos", "Living Room", "Bedroom", "Kitchen", "Before", "After", "3D Designs"];
 
@@ -24,47 +27,56 @@ export default function SitePhotos() {
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuB6QQTFFY3ts0M-4enJ9dA27hJJwzq4Te89j9afZE7uwHQL1x-gbOwmLKECDnhSZB2SQBUcJ9FjwBypoNR3HHVeqLZSkDWA_5EKu00j7b9B74yyS8HkiVwshPrclUDi-Z0ixoHYc4E1oqE0ZB1Lc42nzNacbt31EdQIF5N5woMRhHs3iiYqMS8Vt0KHZzo5W2OupfZZ9CJmNMoMnDhHqWy8CbYfDCjDDrGZYhhYKkR9SbpPr--tX_kz6VOpTmaA0bVQLEjn9uUVTocX",
       alt: "A bright, modern living room with a white sofa and minimalist decor.",
-      category: "Living Room"
+      category: "Living Room",
+      area: "12 × 15 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWDNugafda7BxumtUWPqfpM7dA1q3jFNebntB69_4EP0M_XT_XZ9v34RLnnYKO7eaIiOmkfTIDQmIccdzI26ZbwRA7yhHyuuV9Xwf9xf5lJpfvU5Xew4iiZ44vqAnAPLqtTQU3IWq1sBZTJx8mSVsKhgm_nzidzJzvzXv9Uo7VNHsooBZoJHebIk-Sd-_sU9YzAFftFoUyL9HEdqgJROFBTHNftk6z2VYzTayX0afhLP850DH2P3CWFRP7w2Xa2kiTX0P_mPwIIjfa",
       alt: "Elegant living space with a blue velvet sofa and gold accents.",
-      category: "Living Room"
+      category: "Living Room",
+      area: "14 × 18 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYTHCr45PiLNsr8MiwfyzzU05nWUOMfoKowDsp-tUJrnFpz30YrLo-6DeyLV_8E9tCfLrZsdLQER511VyNeHmuqxCUOfZYbGDDVbXF_YIOCoN0qvN17xAoFzNg59I_LxoGM2Q-bgb27MGbMkLZJ1FDunIcYIlu17UN3VVYc8L5rmFwYIgOLq4QYaDtAY-bKED28YiLfGlDvNrXRGIzY6Swx7n3U28BJDEc8KIRYVyL2zMxLm12cC6X7k76Z_p73PX7BhnDHyMgnKOH",
       alt: "A minimalist chair in a sunlit room with wooden floors.",
-      category: "Living Room"
+      category: "Living Room",
+      area: "10 × 12 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBC6bv35kLvuGmgkqhrs2HqAoGzcryuDPSHlWAYJEhU6A064WDCcqhnISxlMRNClJ_2gt-g_JwjUFU0wWP81pBkD2gM6RDH6g1YYdp_WbTS_Dfv9KYhOW5L0hJHXiPfVjoL_mvLglB276QU6c2ucZBc4Gjgti_W1jUT7o0bLhkvaKpJN03mct6FufPi8E8USjL5EV6XEjG164q5RqNl_1X6wj3cfxqQ5HUnh6zgjlmASrCYwYLj2_I-OXCXnBkfNzLfaEDYXBRoLS9g",
       alt: "A sleek, modern bathroom with a standalone bathtub and marble walls.",
-      category: "Bedroom"
+      category: "Bedroom",
+      area: "15 × 20 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCj9HJ3Zqrzr5uCN74snH9ASIc6OMQjfGd2ZeF6Kr0SxZUiSeuLj9dPokiyp7TU954X_aB31gvB7NE4MRZe4XrOZQEUbgqDibhRE_2g5D8OrfzQxqi_tPwEfPUdaepO4uTOC42zFL4FKpEQsMEPfgWznTFse4iR5-NvvayvA4SHsfL2BHJgcH5GmZJvu4vORoIMNxgVWRrD269wmH_iTaA1uhqXbEataJU5RgGCq7ilkOkrzAh7Vvljd67UhD1Scy7ULW3wot7ujlcF",
       alt: "Cozy bedroom with a large bed, plush pillows, and neutral tones.",
-      category: "Bedroom"
+      category: "Bedroom",
+      area: "13 × 16 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAH-EE08V2OL_kRvqCmI7oR5QAXdlSwSA4pqRYU0rovUrw02bp0dUIeeBZszhXUftWiajmkzd2KdxSEpszsQ2gDuCFwvDNIpVnfn2Zw3ePj3YHyrdNpWpDkJk36Sg5Y0oGjY8dFE1oSd0D2nmgEs7-_TDTV2p8JWTDieCYyzDU5NjYS8qxewXtYAsWuDZ9nVnNdJRPLeMas9ssJenwU0rRUbkbKq634F6-5VoYWA8FDuejUrQ5n1IKMzAnhjmU2JqB9I_PzpoNfREXe",
       alt: "A spacious bedroom with large windows and a view of the outside.",
-      category: "Bedroom"
+      category: "Bedroom",
+      area: "16 × 18 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDSIUw1pr49j_ja5cPPA7Ya07MIUolVeKlf-3MmvyigiGHNxWXMGpuVMEW3aC_rWGJ11uBDcCBPpbF_FjGZ3tcixmsEAmNhNMimg84RZ9fYvBvuEvm6t6x8YJ3niUwRY1iteOKooibrOHjdEUTPQrP8I-26TacEH3qS7XneXsw-mnJYhQNzptPIeeq-uDj-aGOregoH2dXJft4WPZKZCRo-w1M-kXsvUj7JUbS29fIrW4CmYEUJMbWLk33W5RdUDUd9PRXKstnVmIgK",
       alt: "Exterior view of a modern house with a clean architectural design.",
-      category: "After"
+      category: "After",
+      area: "2000 sq ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfQPeKYAQjylrFDk9E3mFu6GV4yg2jju0oqV9ugfd65D8aa1Si2ghshmDT8eYKdSAZNT6xDEuhMMUTnTZjOvNN90UP05lyK94tfq2Ex9easp5MBmfI2xLqOyxDYWKnEtjojvGDU4k_YKaK5U_vsFGmor4HS6H9R4LDBNRtfJkoxaX2WrsqjzAdwNO7-YGEpKHK45PuTiXcwbsstDjyLmmwWyrYidimD9D9eIBohTzfkjLsJm13fUAdQzu7grXipRjnqQMR0cTy9dON",
       alt: "Stylish kitchen with marble countertops and dark wood cabinets.",
-      category: "Kitchen"
+      category: "Kitchen",
+      area: "10 × 14 ft"
     },
     {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBIvPjFr30KG7toCuVK8EubwjRJ363IfgCf--sKpfdNElET7c39JY50KjqWRaNT7eZP5VDO1JFHvRaDcziQBR6CictulhnfuUSr6c3-0O0zAByQRdjo_Y2a1lk6AAHO1zAHe5VOKhi6mw9kvKuxie1zXMg56zfI81BCsB3S-Sl1j5XW6BYI_rE1OWRfHDssppCf16auLtnLiIwNxlV3Cs1jzMA-_VV_xDGuHE7vlRSnNYwwAXxsGUkChG9rrNgS65D-yyT3Dyb4fFNN",
       alt: "Detail shot of a contemporary armchair and a side table with a lamp.",
-      category: "Living Room"
+      category: "Living Room",
+      area: "11 × 13 ft"
     }
   ];
 
@@ -104,10 +116,12 @@ export default function SitePhotos() {
   const handleUploadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    const areaInfo = areaLength && areaWidth ? `\nArea: ${areaLength} × ${areaWidth} ${measurementUnit}` : '';
+    
     if (uploadMethod === "url") {
-      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}\nDescription: ${uploadDescription}\nImage URL: ${uploadImage}`);
+      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}${areaInfo}\nImage URL: ${uploadImage}`);
     } else {
-      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}\nDescription: ${uploadDescription}\nFile: ${selectedFile?.name}`);
+      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}${areaInfo}\nFile: ${selectedFile?.name}`);
     }
     
     setShowUploadForm(false);
@@ -116,6 +130,9 @@ export default function SitePhotos() {
     setSelectedFile(null);
     setPreviewUrl("");
     setUploadMethod("url");
+    setAreaLength("");
+    setAreaWidth("");
+    setMeasurementUnit("ft");
   };
 
   const handleNext = () => {
@@ -266,6 +283,9 @@ export default function SitePhotos() {
                     />
                   </div>
                 </div>
+                {photo.area && (
+                  <p className="mt-2 text-base text-center text-text-light/80 dark:text-text-dark/80 font-semibold">📐 Area: {photo.area}</p>
+                )}
               </div>
             ))}
           </div>
@@ -353,19 +373,19 @@ export default function SitePhotos() {
       {/* Upload Form Modal */}
       {showUploadForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm overflow-y-auto">
-          <div className="relative w-full max-w-2xl rounded-xl bg-white dark:bg-gray-900 p-8 shadow-2xl my-8">
+          <div className="relative w-full max-w-md rounded-xl bg-white dark:bg-gray-900 p-6 shadow-2xl my-8">
             <button
               onClick={() => setShowUploadForm(false)}
-              className="absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
+              className="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             
-            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-6 text-center">Upload New Photo</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">Upload New Photo</h2>
             
-            <form onSubmit={handleUploadSubmit} className="space-y-6">
+            <form onSubmit={handleUploadSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Category</label>
                 <select
@@ -383,120 +403,94 @@ export default function SitePhotos() {
                 </select>
               </div>
               
-              {/* Upload Method Toggle */}
+              {/* File Upload */}
               <div>
-                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-3">Upload Method</label>
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUploadMethod("url");
-                      setSelectedFile(null);
-                      setPreviewUrl("");
-                    }}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-                      uploadMethod === "url"
-                        ? "bg-primary text-white"
-                        : "bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark hover:bg-neutral/30"
-                    }`}
-                  >
-                    Image URL
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUploadMethod("file");
-                      setUploadImage("");
-                    }}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-                      uploadMethod === "file"
-                        ? "bg-primary text-white"
-                        : "bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark hover:bg-neutral/30"
-                    }`}
-                  >
-                    Upload from Device
-                  </button>
-                </div>
-              </div>
-              
-              {/* URL Input */}
-              {uploadMethod === "url" && (
-                <div>
-                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Image URL</label>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Select Image from Device</label>
+                <div className="relative">
                   <input
-                    type="url"
-                    value={uploadImage}
-                    onChange={(e) => setUploadImage(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="https://example.com/image.jpg"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    id="fileInput"
                     required
                   />
-                  <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-1">Enter the URL of the image you want to upload</p>
+                  <label
+                    htmlFor="fileInput"
+                    className="flex items-center justify-center w-full px-4 py-4 border-2 border-dashed border-neutral/50 rounded-lg cursor-pointer hover:border-primary transition-all bg-white dark:bg-gray-800"
+                  >
+                    <div className="text-center">
+                      <svg className="mx-auto h-8 w-8 text-text-light/50 dark:text-text-dark/50 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      {selectedFile ? (
+                        <p className="text-xs text-primary font-medium">{selectedFile.name}</p>
+                      ) : (
+                        <>
+                          <p className="text-xs text-text-light dark:text-text-dark font-medium">Click to upload image</p>
+                          <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-0.5">PNG, JPG, GIF up to 10MB</p>
+                        </>
+                      )}
+                    </div>
+                  </label>
                 </div>
-              )}
-              
-              {/* File Upload */}
-              {uploadMethod === "file" && (
-                <div>
-                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Select Image from Device</label>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                      id="fileInput"
-                      required
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-neutral/50 rounded-lg cursor-pointer hover:border-primary transition-all bg-white dark:bg-gray-800"
-                    >
-                      <div className="text-center">
-                        <svg className="mx-auto h-12 w-12 text-text-light/50 dark:text-text-dark/50 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        {selectedFile ? (
-                          <p className="text-sm text-primary font-medium">{selectedFile.name}</p>
-                        ) : (
-                          <>
-                            <p className="text-sm text-text-light dark:text-text-dark font-medium">Click to upload image</p>
-                            <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-1">PNG, JPG, GIF up to 10MB</p>
-                          </>
-                        )}
-                      </div>
-                    </label>
-                  </div>
+                
+                {/* Image Specifications */}
+                <div className="mt-2 p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                  <p className="text-xs font-medium text-blue-900 dark:text-blue-200 mb-0.5">📐 Recommended Image Specifications:</p>
+                  <ul className="text-xs text-blue-800 dark:text-blue-300 space-y-0.5">
+                    <li>• <strong>Aspect Ratio:</strong> 4:3 or 16:9 (e.g., 1600x1200px or 1920x1080px)</li>
+                    <li>• <strong>Minimum Size:</strong> 1200x900px for best quality</li>
+                    <li>• <strong>File Format:</strong> JPG, PNG, or WebP</li>
+                    <li>• <strong>File Size:</strong> Maximum 10MB</li>
+                  </ul>
                 </div>
-              )}
-              
-              <div>
-                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Description</label>
-                <textarea
-                  value={uploadDescription}
-                  onChange={(e) => setUploadDescription(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none"
-                  placeholder="Enter a brief description of the photo"
-                  required
-                />
               </div>
               
-              {uploadImage && uploadMethod === "url" && uploadImage.trim() !== "" && uploadImage.startsWith('http') && (
-                <div>
-                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Preview</label>
-                  <div className="relative w-full h-48 rounded-lg overflow-hidden bg-neutral/20 dark:bg-gray-800">
-                    <Image
-                      src={uploadImage}
-                      alt="Preview"
-                      fill
-                      className="object-cover"
-                      onError={() => alert("Invalid image URL")}
+              {/* Area Dimensions */}
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-1.5">Area Dimensions (Optional)</label>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      value={areaLength}
+                      onChange={(e) => setAreaLength(e.target.value)}
+                      className="w-full px-3 py-1.5 text-sm rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="Length"
+                      step="0.1"
+                      min="0"
                     />
                   </div>
+                  <span className="flex items-center text-text-light dark:text-text-dark font-medium text-sm">×</span>
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      value={areaWidth}
+                      onChange={(e) => setAreaWidth(e.target.value)}
+                      className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                      placeholder="Width"
+                      step="0.1"
+                      min="0"
+                    />
+                  </div>
+                  <div className="w-24">
+                    <select
+                      value={measurementUnit}
+                      onChange={(e) => setMeasurementUnit(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="ft">ft</option>
+                      <option value="m">m</option>
+                      <option value="cm">cm</option>
+                      <option value="in">in</option>
+                    </select>
+                  </div>
                 </div>
-              )}
+                <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-1">Example: 12 × 15 ft</p>
+              </div>
               
-              {previewUrl && uploadMethod === "file" && (
+              {previewUrl && (
                 <div>
                   <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Preview</label>
                   <div className="relative w-full h-48 rounded-lg overflow-hidden bg-neutral/20 dark:bg-gray-800">

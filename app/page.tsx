@@ -696,7 +696,7 @@ export default function Home() {
                 <li>
                   <a className="text-base text-text-light/70 dark:text-text-dark/70 hover:text-primary dark:hover:text-accent hover:translate-x-1 inline-flex items-center gap-2 transition-all duration-300" href="#">
                     <span className="material-symbols-outlined text-sm">chevron_right</span>
-                    Portfolio
+                    Office
                   </a>
                 </li>
                 <li>
