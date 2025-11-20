@@ -1,7 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+interface Photo {
+  _id: string;
+  category: string;
+  imageUrl: string;
+  length?: number;
+  width?: number;
+  unit?: string;
+  createdAt: string;
+}
 
 export default function SitePhotos() {
   const [selectedFilter, setSelectedFilter] = useState("All Photos");
@@ -20,65 +30,67 @@ export default function SitePhotos() {
   const [areaLength, setAreaLength] = useState("");
   const [areaWidth, setAreaWidth] = useState("");
   const [measurementUnit, setMeasurementUnit] = useState("ft");
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loadingPhotos, setLoadingPhotos] = useState(true);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showAdminOptions, setShowAdminOptions] = useState(false);
 
   const filters = ["All Photos", "Living Room", "Bedroom", "Kitchen", "Before", "After", "3D Designs"];
 
-  const photos = [
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuB6QQTFFY3ts0M-4enJ9dA27hJJwzq4Te89j9afZE7uwHQL1x-gbOwmLKECDnhSZB2SQBUcJ9FjwBypoNR3HHVeqLZSkDWA_5EKu00j7b9B74yyS8HkiVwshPrclUDi-Z0ixoHYc4E1oqE0ZB1Lc42nzNacbt31EdQIF5N5woMRhHs3iiYqMS8Vt0KHZzo5W2OupfZZ9CJmNMoMnDhHqWy8CbYfDCjDDrGZYhhYKkR9SbpPr--tX_kz6VOpTmaA0bVQLEjn9uUVTocX",
-      alt: "A bright, modern living room with a white sofa and minimalist decor.",
-      category: "Living Room",
-      area: "12 × 15 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWDNugafda7BxumtUWPqfpM7dA1q3jFNebntB69_4EP0M_XT_XZ9v34RLnnYKO7eaIiOmkfTIDQmIccdzI26ZbwRA7yhHyuuV9Xwf9xf5lJpfvU5Xew4iiZ44vqAnAPLqtTQU3IWq1sBZTJx8mSVsKhgm_nzidzJzvzXv9Uo7VNHsooBZoJHebIk-Sd-_sU9YzAFftFoUyL9HEdqgJROFBTHNftk6z2VYzTayX0afhLP850DH2P3CWFRP7w2Xa2kiTX0P_mPwIIjfa",
-      alt: "Elegant living space with a blue velvet sofa and gold accents.",
-      category: "Living Room",
-      area: "14 × 18 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYTHCr45PiLNsr8MiwfyzzU05nWUOMfoKowDsp-tUJrnFpz30YrLo-6DeyLV_8E9tCfLrZsdLQER511VyNeHmuqxCUOfZYbGDDVbXF_YIOCoN0qvN17xAoFzNg59I_LxoGM2Q-bgb27MGbMkLZJ1FDunIcYIlu17UN3VVYc8L5rmFwYIgOLq4QYaDtAY-bKED28YiLfGlDvNrXRGIzY6Swx7n3U28BJDEc8KIRYVyL2zMxLm12cC6X7k76Z_p73PX7BhnDHyMgnKOH",
-      alt: "A minimalist chair in a sunlit room with wooden floors.",
-      category: "Living Room",
-      area: "10 × 12 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBC6bv35kLvuGmgkqhrs2HqAoGzcryuDPSHlWAYJEhU6A064WDCcqhnISxlMRNClJ_2gt-g_JwjUFU0wWP81pBkD2gM6RDH6g1YYdp_WbTS_Dfv9KYhOW5L0hJHXiPfVjoL_mvLglB276QU6c2ucZBc4Gjgti_W1jUT7o0bLhkvaKpJN03mct6FufPi8E8USjL5EV6XEjG164q5RqNl_1X6wj3cfxqQ5HUnh6zgjlmASrCYwYLj2_I-OXCXnBkfNzLfaEDYXBRoLS9g",
-      alt: "A sleek, modern bathroom with a standalone bathtub and marble walls.",
-      category: "Bedroom",
-      area: "15 × 20 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCj9HJ3Zqrzr5uCN74snH9ASIc6OMQjfGd2ZeF6Kr0SxZUiSeuLj9dPokiyp7TU954X_aB31gvB7NE4MRZe4XrOZQEUbgqDibhRE_2g5D8OrfzQxqi_tPwEfPUdaepO4uTOC42zFL4FKpEQsMEPfgWznTFse4iR5-NvvayvA4SHsfL2BHJgcH5GmZJvu4vORoIMNxgVWRrD269wmH_iTaA1uhqXbEataJU5RgGCq7ilkOkrzAh7Vvljd67UhD1Scy7ULW3wot7ujlcF",
-      alt: "Cozy bedroom with a large bed, plush pillows, and neutral tones.",
-      category: "Bedroom",
-      area: "13 × 16 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAH-EE08V2OL_kRvqCmI7oR5QAXdlSwSA4pqRYU0rovUrw02bp0dUIeeBZszhXUftWiajmkzd2KdxSEpszsQ2gDuCFwvDNIpVnfn2Zw3ePj3YHyrdNpWpDkJk36Sg5Y0oGjY8dFE1oSd0D2nmgEs7-_TDTV2p8JWTDieCYyzDU5NjYS8qxewXtYAsWuDZ9nVnNdJRPLeMas9ssJenwU0rRUbkbKq634F6-5VoYWA8FDuejUrQ5n1IKMzAnhjmU2JqB9I_PzpoNfREXe",
-      alt: "A spacious bedroom with large windows and a view of the outside.",
-      category: "Bedroom",
-      area: "16 × 18 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDSIUw1pr49j_ja5cPPA7Ya07MIUolVeKlf-3MmvyigiGHNxWXMGpuVMEW3aC_rWGJ11uBDcCBPpbF_FjGZ3tcixmsEAmNhNMimg84RZ9fYvBvuEvm6t6x8YJ3niUwRY1iteOKooibrOHjdEUTPQrP8I-26TacEH3qS7XneXsw-mnJYhQNzptPIeeq-uDj-aGOregoH2dXJft4WPZKZCRo-w1M-kXsvUj7JUbS29fIrW4CmYEUJMbWLk33W5RdUDUd9PRXKstnVmIgK",
-      alt: "Exterior view of a modern house with a clean architectural design.",
-      category: "After",
-      area: "2000 sq ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfQPeKYAQjylrFDk9E3mFu6GV4yg2jju0oqV9ugfd65D8aa1Si2ghshmDT8eYKdSAZNT6xDEuhMMUTnTZjOvNN90UP05lyK94tfq2Ex9easp5MBmfI2xLqOyxDYWKnEtjojvGDU4k_YKaK5U_vsFGmor4HS6H9R4LDBNRtfJkoxaX2WrsqjzAdwNO7-YGEpKHK45PuTiXcwbsstDjyLmmwWyrYidimD9D9eIBohTzfkjLsJm13fUAdQzu7grXipRjnqQMR0cTy9dON",
-      alt: "Stylish kitchen with marble countertops and dark wood cabinets.",
-      category: "Kitchen",
-      area: "10 × 14 ft"
-    },
-    {
-      url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBIvPjFr30KG7toCuVK8EubwjRJ363IfgCf--sKpfdNElET7c39JY50KjqWRaNT7eZP5VDO1JFHvRaDcziQBR6CictulhnfuUSr6c3-0O0zAByQRdjo_Y2a1lk6AAHO1zAHe5VOKhi6mw9kvKuxie1zXMg56zfI81BCsB3S-Sl1j5XW6BYI_rE1OWRfHDssppCf16auLtnLiIwNxlV3Cs1jzMA-_VV_xDGuHE7vlRSnNYwwAXxsGUkChG9rrNgS65D-yyT3Dyb4fFNN",
-      alt: "Detail shot of a contemporary armchair and a side table with a lamp.",
-      category: "Living Room",
-      area: "11 × 13 ft"
+  // Fetch photos from backend
+  const fetchPhotos = async () => {
+    try {
+      setLoadingPhotos(true);
+      const response = await fetch('http://localhost:4000/api/photos');
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        setPhotos(data.photos);
+      } else {
+        console.error('Failed to fetch photos:', data.message);
+        setPhotos([]);
+      }
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+      setPhotos([]);
+    } finally {
+      setLoadingPhotos(false);
     }
-  ];
+  };
+
+  // Fetch photos on component mount
+  useEffect(() => {
+    fetchPhotos();
+  }, []);
+
+  // Delete photo handler
+  const handleDeletePhoto = async (photoId: string, photoUrl: string) => {
+    if (!confirm('Are you sure you want to delete this photo? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/photos/${photoId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Photo deleted successfully!');
+        fetchPhotos();
+        setSelectedImage(null);
+      } else {
+        alert(`❌ Delete failed: ${data.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      alert('❌ Failed to delete photo. Please try again.');
+    }
+  };
 
   const filteredPhotos = selectedFilter === "All Photos" 
     ? photos 
@@ -86,12 +98,13 @@ export default function SitePhotos() {
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple demo authentication - replace with real auth in production
     if (adminUsername === "admin" && adminPassword === "bindu2024") {
       setShowAdminLogin(false);
-      setShowUploadForm(true);
+      setIsAdminLoggedIn(true);
       setAdminUsername("");
       setAdminPassword("");
+      // Show admin options modal
+      setShowAdminOptions(true);
     } else {
       alert("Invalid credentials! Please try again.");
     }
@@ -113,26 +126,56 @@ export default function SitePhotos() {
     }
   };
 
-  const handleUploadSubmit = (e: React.FormEvent) => {
+  const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const areaInfo = areaLength && areaWidth ? `\nArea: ${areaLength} × ${areaWidth} ${measurementUnit}` : '';
-    
-    if (uploadMethod === "url") {
-      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}${areaInfo}\nImage URL: ${uploadImage}`);
-    } else {
-      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}${areaInfo}\nFile: ${selectedFile?.name}`);
+    if (!selectedFile) {
+      setUploadStatus("Please select a file to upload");
+      return;
     }
-    
-    setShowUploadForm(false);
-    setUploadImage("");
-    setUploadDescription("");
-    setSelectedFile(null);
-    setPreviewUrl("");
-    setUploadMethod("url");
-    setAreaLength("");
-    setAreaWidth("");
-    setMeasurementUnit("ft");
+
+    try {
+      setIsUploading(true);
+      setUploadStatus("Uploading to Cloudinary...");
+      
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      formData.append('category', uploadCategory);
+      formData.append('areaLength', areaLength);
+      formData.append('areaWidth', areaWidth);
+      formData.append('measurementUnit', measurementUnit);
+
+      const response = await fetch('http://localhost:4000/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUploadStatus("✅ Photo uploaded successfully!");
+        setTimeout(() => {
+          setShowUploadForm(false);
+          setUploadImage("");
+          setUploadDescription("");
+          setSelectedFile(null);
+          setPreviewUrl("");
+          setUploadMethod("file");
+          setAreaLength("");
+          setAreaWidth("");
+          setMeasurementUnit("ft");
+          setUploadStatus("");
+          fetchPhotos();
+        }, 2000);
+      } else {
+        setUploadStatus(`❌ Upload failed: ${data.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadStatus("❌ Failed to upload photo. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleNext = () => {
@@ -254,41 +297,93 @@ export default function SitePhotos() {
             ))}
             
             {/* Add Photo Button for Admin */}
-            <button
-              onClick={() => setShowAdminLogin(true)}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-primary/90 transition-all hover:scale-110"
-              title="Add New Photos (Admin Only)"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            </button>
+            {!isAdminLoggedIn ? (
+              <button
+                onClick={() => setShowAdminLogin(true)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-primary/90 transition-all hover:scale-110"
+                title="Admin Login"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={() => setShowUploadForm(true)}
+                  className="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-white shadow-md hover:bg-primary/90 transition-all hover:scale-105 px-4"
+                  title="Upload New Photo"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="text-sm font-medium">Upload</span>
+                </button>
+                <button
+                  onClick={() => setShowAdminDashboard(true)}
+                  className="flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-accent text-white shadow-md hover:bg-accent/90 transition-all hover:scale-105 px-4"
+                  title="Manage All Photos"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                  <span className="text-sm font-medium">Manage ({photos.length})</span>
+                </button>
+              </>
+            )}
           </div>
 
           {/* Image Grid */}
-          <div className="grid grid-cols-1 gap-6 py-8 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredPhotos.map((photo, index) => (
-              <div
-                key={index}
-                className="group flex cursor-pointer flex-col"
-                onClick={() => setSelectedImage(index)}
-              >
-                <div className="h-auto w-full overflow-hidden rounded-xl bg-neutral/20 dark:bg-gray-800 shadow-md transition-shadow duration-300 hover:shadow-xl">
-                  <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                    <Image
-                      src={photo.url}
-                      alt={photo.alt}
-                      fill
-                      className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    />
+          {loadingPhotos ? (
+            <div className="flex justify-center items-center py-20">
+              <p className="text-lg text-text-light/70 dark:text-text-dark/70">Loading photos...</p>
+            </div>
+          ) : filteredPhotos.length === 0 ? (
+            <div className="flex flex-col justify-center items-center py-20">
+              <p className="text-lg text-text-light/70 dark:text-text-dark/70 mb-4">No photos found in this category.</p>
+              {selectedFilter === "All Photos" && (
+                <p className="text-sm text-text-light/60 dark:text-text-dark/60">Upload your first photo using the admin panel!</p>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 py-8 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredPhotos.map((photo, index) => (
+                <div
+                  key={photo._id}
+                  className="group flex cursor-pointer flex-col"
+                  onClick={() => setSelectedImage(index)}
+                >
+                  <div className="h-auto w-full overflow-hidden rounded-xl bg-neutral/20 dark:bg-gray-800 shadow-md transition-shadow duration-300 hover:shadow-xl">
+                    <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                      <Image
+                        src={photo.imageUrl}
+                        alt={`${photo.category} design`}
+                        fill
+                        className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
+                      />
+                      {isAdminLoggedIn && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeletePhoto(photo._id, photo.imageUrl);
+                          }}
+                          className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 opacity-0 group-hover:opacity-100"
+                          title="Delete Photo"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
                   </div>
+                  {photo.length && photo.width && (
+                    <p className="mt-2 text-base text-center text-text-light/80 dark:text-text-dark/80 font-semibold">📐 Area: {photo.length} × {photo.width} {photo.unit || 'ft'}</p>
+                  )}
                 </div>
-                {photo.area && (
-                  <p className="mt-2 text-base text-center text-text-light/80 dark:text-text-dark/80 font-semibold">📐 Area: {photo.area}</p>
-                )}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Meta Text */}
           <div className="py-8">
@@ -366,6 +461,211 @@ export default function SitePhotos() {
                 Login
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Options Modal */}
+      {showAdminOptions && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md rounded-xl bg-white dark:bg-gray-900 p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-4 text-center">Admin Panel</h2>
+            <p className="text-text-light/70 dark:text-text-dark/70 mb-6 text-center">What would you like to do?</p>
+            
+            <div className="space-y-4">
+              <button
+                onClick={() => {
+                  setShowAdminOptions(false);
+                  setShowUploadForm(true);
+                }}
+                className="w-full py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all flex items-center justify-center gap-3"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Upload New Photo</span>
+              </button>
+              
+              <button
+                onClick={() => {
+                  setShowAdminOptions(false);
+                  setShowAdminDashboard(true);
+                }}
+                className="w-full py-4 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90 transition-all flex items-center justify-center gap-3"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+                <span>Manage All Photos ({photos.length})</span>
+              </button>
+              
+              <button
+                onClick={() => setShowAdminOptions(false)}
+                className="w-full py-3 bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark rounded-lg font-semibold hover:bg-neutral/30 dark:hover:bg-gray-700 transition-all"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Options Modal */}
+      {showAdminOptions && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md rounded-xl bg-white dark:bg-gray-900 p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-4 text-center">Admin Panel</h2>
+            <p className="text-text-light/70 dark:text-text-dark/70 mb-6 text-center">What would you like to do?</p>
+            
+            <div className="space-y-4">
+              <button
+                onClick={() => {
+                  setShowAdminOptions(false);
+                  setShowUploadForm(true);
+                }}
+                className="w-full py-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all flex items-center justify-center gap-3"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Upload New Photo</span>
+              </button>
+              
+              <button
+                onClick={() => {
+                  setShowAdminOptions(false);
+                  setShowAdminDashboard(true);
+                }}
+                className="w-full py-4 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90 transition-all flex items-center justify-center gap-3"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+                <span>Manage All Photos ({photos.length})</span>
+              </button>
+              
+              <button
+                onClick={() => setShowAdminOptions(false)}
+                className="w-full py-3 bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark rounded-lg font-semibold hover:bg-neutral/30 dark:hover:bg-gray-700 transition-all"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Dashboard Modal */}
+      {showAdminDashboard && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-6xl rounded-xl bg-white dark:bg-gray-900 p-6 shadow-2xl my-8">
+            <button
+              onClick={() => setShowAdminDashboard(false)}
+              className="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-text-light dark:text-text-dark">Admin Photo Management</h2>
+              <button
+                onClick={() => {
+                  setShowAdminDashboard(false);
+                  setShowUploadForm(true);
+                }}
+                className="px-4 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Upload New Photo
+              </button>
+            </div>
+
+            <div className="mb-4 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+              <p className="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Total Photos:</strong> {photos.length} | Click on any photo to delete it from your project
+              </p>
+            </div>
+
+            {loadingPhotos ? (
+              <div className="flex justify-center items-center py-20">
+                <p className="text-lg text-text-light/70 dark:text-text-dark/70">Loading photos...</p>
+              </div>
+            ) : photos.length === 0 ? (
+              <div className="flex flex-col justify-center items-center py-20">
+                <p className="text-lg text-text-light/70 dark:text-text-dark/70 mb-4">No photos uploaded yet.</p>
+                <button
+                  onClick={() => {
+                    setShowAdminDashboard(false);
+                    setShowUploadForm(true);
+                  }}
+                  className="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                >
+                  Upload Your First Photo
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 max-h-[600px] overflow-y-auto pr-2">
+                {photos.map((photo) => (
+                  <div
+                    key={photo._id}
+                    className="group relative rounded-xl bg-neutral/20 dark:bg-gray-800 shadow-md hover:shadow-xl transition-all"
+                  >
+                    <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                      <Image
+                        src={photo.imageUrl}
+                        alt={`${photo.category} design`}
+                        fill
+                        className="object-cover rounded-t-xl"
+                      />
+                      <button
+                        onClick={() => handleDeletePhoto(photo._id, photo.imageUrl)}
+                        className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-all hover:scale-110 opacity-0 group-hover:opacity-100"
+                        title="Delete Photo"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <p className="text-sm font-semibold text-text-light dark:text-text-dark mb-1">
+                        📂 {photo.category}
+                      </p>
+                      {photo.length && photo.width && (
+                        <p className="text-xs text-text-light/70 dark:text-text-dark/70">
+                          📐 {photo.length} × {photo.width} {photo.unit || 'ft'}
+                        </p>
+                      )}
+                      <p className="text-xs text-text-light/60 dark:text-text-dark/60 mt-1">
+                        🕒 {new Date(photo.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-6 flex justify-between items-center pt-4 border-t border-neutral/20 dark:border-gray-700">
+              <button
+                onClick={() => setShowAdminDashboard(false)}
+                className="px-6 py-2 bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark rounded-lg font-semibold hover:bg-neutral/30 dark:hover:bg-gray-700 transition-all"
+              >
+                Close Dashboard
+              </button>
+              <button
+                onClick={() => {
+                  setIsAdminLoggedIn(false);
+                  setShowAdminDashboard(false);
+                }}
+                className="px-6 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -514,11 +814,22 @@ export default function SitePhotos() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                  disabled={isUploading}
+                  className={`flex-1 py-3 rounded-lg font-semibold text-white transition-all ${
+                    isUploading 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-primary hover:bg-primary/90'
+                  }`}
                 >
-                  Upload Photo
+                  {isUploading ? 'Uploading...' : 'Upload Photo'}
                 </button>
               </div>
+              
+              {uploadStatus && (
+                <div className={`p-3 rounded-lg text-center font-medium ${uploadStatus.includes('✅') ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : uploadStatus.includes('❌') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'}`}>
+                  {uploadStatus}
+                </div>
+              )}
             </form>
           </div>
         </div>
@@ -545,11 +856,22 @@ export default function SitePhotos() {
               )}
               <div className="relative w-full overflow-hidden rounded-lg bg-neutral/20 dark:bg-gray-700" style={{ aspectRatio: "16/9" }}>
                 <Image
-                  src={filteredPhotos[selectedImage].url}
-                  alt={filteredPhotos[selectedImage].alt}
+                  src={filteredPhotos[selectedImage].imageUrl}
+                  alt={`${filteredPhotos[selectedImage].category} design`}
                   fill
                   className="object-cover"
                 />
+                {isAdminLoggedIn && (
+                  <button
+                    onClick={() => handleDeletePhoto(filteredPhotos[selectedImage]._id, filteredPhotos[selectedImage].imageUrl)}
+                    className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white rounded-lg px-4 py-2 shadow-lg transition-all hover:scale-105 flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Delete Photo
+                  </button>
+                )}
               </div>
               {selectedImage < filteredPhotos.length - 1 && (
                 <button

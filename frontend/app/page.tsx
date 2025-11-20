@@ -5,8 +5,152 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    projectType: "",
+    budgetRange: "",
+    message: "",
+  });
+  const [formStatus, setFormStatus] = useState({ type: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Review form state
+  const [reviewData, setReviewData] = useState({
+    name: "",
+    email: "",
+    rating: 0,
+    review: "",
+  });
+  const [reviewStatus, setReviewStatus] = useState({ type: "", message: "" });
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+
+  // Fetched reviews from database
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus({ type: "", message: "" });
+
+    try {
+      const response = await fetch("http://localhost:4000/api/enquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setFormStatus({ type: "success", message: data.message || "Enquiry sent successfully! We'll contact you soon." });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          projectType: "",
+          budgetRange: "",
+          message: ""
+        });
+      } else {
+        setFormStatus({ type: "error", message: data.message || "Failed to send enquiry. Please try again." });
+      }
+    } catch (error) {
+      setFormStatus({ type: "error", message: "Network error. Please check your connection and try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReviewInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setReviewData({
+      ...reviewData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleReviewSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmittingReview(true);
+    setReviewStatus({ type: "", message: "" });
+
+    if (reviewData.rating === 0) {
+      setReviewStatus({ type: "error", message: "Please select a rating" });
+      setIsSubmittingReview(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:4000/api/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setReviewStatus({ type: "success", message: data.message || "Thank you for your review!" });
+        setReviewData({
+          name: "",
+          email: "",
+          rating: 0,
+          review: "",
+        });
+        // Reset star ratings visually
+        document.querySelectorAll('#review-form button[type="button"] span').forEach(span => {
+          (span as HTMLElement).style.fontVariationSettings = "'FILL' 0";
+          span.parentElement?.classList.remove('text-yellow-500');
+          span.parentElement?.classList.add('text-gray-300');
+        });
+        // Refresh reviews list
+        fetchReviews();
+      } else {
+        setReviewStatus({ type: "error", message: data.message || "Failed to submit review. Please try again." });
+      }
+    } catch (error) {
+      setReviewStatus({ type: "error", message: "Network error. Please check your connection and try again." });
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
+
+  const fetchReviews = async () => {
+    try {
+      setLoadingReviews(true);
+      const response = await fetch("http://localhost:4000/api/reviews");
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setReviews(data.reviews);
+      } else {
+        console.error("Failed to load reviews:", data);
+        setReviews([]); // Show empty state instead of loading forever
+      }
+    } catch (error) {
+      console.error("Failed to fetch reviews:", error);
+      setReviews([]); // Show empty state on error
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
 
   useEffect(() => {
+    // Fetch reviews on page load
+    fetchReviews();
+
     // Create intersection observer for scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
@@ -367,22 +511,61 @@ export default function Home() {
 
             <div className="lg:col-span-3">
               <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-8 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none">
-                <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {formStatus.message && (
+                  <div className={`mb-6 p-4 rounded-lg ${formStatus.type === "success" ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200" : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200"}`}>
+                    {formStatus.message}
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="full-name">Full Name</label>
-                    <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="full-name" placeholder="Enter your name" type="text" />
+                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="full-name">Full Name *</label>
+                    <input 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="full-name" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter your name" 
+                      type="text"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="email">Email Address</label>
-                    <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="email" placeholder="you@example.com" type="email" />
+                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="email">Email Address *</label>
+                    <input 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="you@example.com" 
+                      type="email"
+                      required
+                    />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="phone">Phone Number</label>
-                    <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="phone" placeholder="+91 00000 00000" type="tel" />
+                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="phone">Phone Number *</label>
+                    <input 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="phone" 
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91 00000 00000" 
+                      type="tel"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="project-type">Project Type</label>
-                    <select className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="project-type">
+                    <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="project-type">Project Type *</label>
+                    <select 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="project-type"
+                      name="projectType"
+                      value={formData.projectType}
+                      onChange={handleInputChange}
+                      required
+                    >
                       <option value="">Select</option>
                       <option>Home Interior</option>
                       <option>Commercial Interior</option>
@@ -395,7 +578,13 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="budget">Budget Range</label>
-                    <select className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="budget">
+                    <select 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="budget"
+                      name="budgetRange"
+                      value={formData.budgetRange}
+                      onChange={handleInputChange}
+                    >
                       <option value="">Select Range</option>
                       <option>₹1-3 Lakhs</option>
                       <option>₹3-5 Lakhs</option>
@@ -411,10 +600,24 @@ export default function Home() {
                   </div>
                   <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="message">Message</label>
-                    <textarea className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="message" placeholder="Tell us about your project..." rows={4}></textarea>
+                    <textarea 
+                      className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                      id="message" 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Tell us about your project..." 
+                      rows={4}
+                    ></textarea>
                   </div>
                   <div className="sm:col-span-2">
-                    <button className="w-full bg-[#D4AF8B] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300" type="submit">Send Enquiry</button>
+                    <button 
+                      className="w-full bg-[#D4AF8B] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" 
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Sending..." : "Send Enquiry"}
+                    </button>
                   </div>
                 </form>
               </div>
@@ -430,69 +633,91 @@ export default function Home() {
             
             {/* Reviews Carousel */}
             <div className="relative mb-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">Sarah Johnson</h3>
-                  <div className="flex text-yellow-500 my-2">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;Bindu Designs transformed our house into a home. Their attention to detail is impeccable.&quot;</p>
+              {loadingReviews ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-600 dark:text-gray-400">Loading reviews...</p>
                 </div>
-                <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">Michael Chen</h3>
-                  <div className="flex text-yellow-500 my-2">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;The commercial space they designed for us has been a game-changer for our business.&quot;</p>
+              ) : reviews.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-600 dark:text-gray-400">No reviews yet. Be the first to share your experience!</p>
                 </div>
-                <div className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
-                  <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">David Rodriguez</h3>
-                  <div className="flex text-yellow-500 my-2">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;Professional, creative, and delivered beyond our expectations. Highly recommend!&quot;</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {reviews.slice(0, 6).map((review, index) => (
+                    <div key={review._id || index} className="bg-[#FDFBFA] dark:bg-gray-800/20 p-6 rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-none flex flex-col items-center text-center">
+                      <h3 className="font-bold text-[#1A2A44] dark:text-white text-lg">{review.name}</h3>
+                      <div className="flex gap-0.5 my-3">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span 
+                            key={star} 
+                            className={`text-base ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-sm text-[#9a864c] dark:text-gray-400">&quot;{review.review}&quot;</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
+                        {new Date(review.createdAt).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              </div>
-
-              {/* Navigation Buttons */}
-              <button className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 text-accent p-3 rounded-full hover:text-accent/70 transition-all duration-300 z-10">
-                <span className="material-symbols-outlined text-4xl">chevron_left</span>
-              </button>
-              <button className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 text-accent p-3 rounded-full hover:text-accent/70 transition-all duration-300 z-10">
-                <span className="material-symbols-outlined text-4xl">chevron_right</span>
-              </button>
-            </div>
-
-            {/* View All Reviews Button */}
-            <div className="text-center mb-12">
-              <button className="bg-accent text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300">
-                View All Reviews
-              </button>
+              )}
             </div>
 
             {/* Write a Review Form */}
             <div className="bg-[#FDFBFA] dark:bg-gray-800/20 rounded-xl p-6 lg:p-8 shadow-lg">
               <h3 className="font-[family-name:var(--font-playfair)] text-[#1A2A44] dark:text-white text-2xl font-bold mb-6 text-center">Share Your Experience</h3>
-              <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
+              {/* Review Status Message */}
+              {reviewStatus.message && (
+                <div className={`mb-4 p-4 rounded-lg ${
+                  reviewStatus.type === "success" 
+                    ? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800" 
+                    : "bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800"
+                }`}>
+                  {reviewStatus.message}
+                </div>
+              )}
+
+              <form id="review-form" onSubmit={handleReviewSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-name">Your Name</label>
-                  <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="reviewer-name" placeholder="Enter your name" type="text" />
+                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-name">Your Name *</label>
+                  <input 
+                    className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                    id="reviewer-name" 
+                    name="name"
+                    value={reviewData.name}
+                    onChange={handleReviewInputChange}
+                    placeholder="Enter your name" 
+                    type="text"
+                    required
+                  />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-email">Email Address</label>
-                  <input className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="reviewer-email" placeholder="you@example.com" type="email" />
+                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="reviewer-email">Email Address *</label>
+                  <input 
+                    className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                    id="reviewer-email" 
+                    name="email"
+                    value={reviewData.email}
+                    onChange={handleReviewInputChange}
+                    placeholder="you@example.com" 
+                    type="email"
+                    required
+                  />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2 text-center">Rating</label>
+                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2 text-center">Rating *</label>
                   <div className="flex gap-2 justify-center">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button key={star} type="button" className="text-gray-300 hover:text-yellow-500 transition-colors group" onClick={(e) => {
+                        setReviewData({ ...reviewData, rating: star });
                         const stars = e.currentTarget.parentElement?.querySelectorAll('button');
                         stars?.forEach((s, idx) => {
                           const span = s.querySelector('span');
@@ -513,11 +738,26 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="review-text">Your Review</label>
-                  <textarea className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" id="review-text" placeholder="Share your experience with us..." rows={4}></textarea>
+                  <label className="block text-sm font-medium text-[#1A2A44] dark:text-gray-300 mb-2" htmlFor="review-text">Your Review *</label>
+                  <textarea 
+                    className="w-full bg-[#f3f0e7] dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-[#D4AF8B] focus:border-[#D4AF8B] px-4 py-2" 
+                    id="review-text" 
+                    name="review"
+                    value={reviewData.review}
+                    onChange={handleReviewInputChange}
+                    placeholder="Share your experience with us..." 
+                    rows={4}
+                    required
+                  ></textarea>
                 </div>
                 <div className="sm:col-span-2">
-                  <button className="w-full bg-[#D4AF8B] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300" type="submit">Submit Review</button>
+                  <button 
+                    className="w-full bg-[#D4AF8B] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" 
+                    type="submit"
+                    disabled={isSubmittingReview}
+                  >
+                    {isSubmittingReview ? "Submitting..." : "Submit Review"}
+                  </button>
                 </div>
               </form>
             </div>
