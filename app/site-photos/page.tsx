@@ -7,6 +7,16 @@ export default function SitePhotos() {
   const [selectedFilter, setSelectedFilter] = useState("All Photos");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [showUploadForm, setShowUploadForm] = useState(false);
+  const [adminUsername, setAdminUsername] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [uploadCategory, setUploadCategory] = useState("Living Room");
+  const [uploadImage, setUploadImage] = useState("");
+  const [uploadDescription, setUploadDescription] = useState("");
+  const [uploadMethod, setUploadMethod] = useState<"url" | "file">("url");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const filters = ["All Photos", "Living Room", "Bedroom", "Kitchen", "Before", "After", "3D Designs"];
 
@@ -62,6 +72,52 @@ export default function SitePhotos() {
     ? photos 
     : photos.filter(photo => photo.category === selectedFilter);
 
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple demo authentication - replace with real auth in production
+    if (adminUsername === "admin" && adminPassword === "bindu2024") {
+      setShowAdminLogin(false);
+      setShowUploadForm(true);
+      setAdminUsername("");
+      setAdminPassword("");
+    } else {
+      alert("Invalid credentials! Please try again.");
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        setSelectedFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select an image file');
+      }
+    }
+  };
+
+  const handleUploadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (uploadMethod === "url") {
+      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}\nDescription: ${uploadDescription}\nImage URL: ${uploadImage}`);
+    } else {
+      alert(`Photo uploaded successfully!\nCategory: ${uploadCategory}\nDescription: ${uploadDescription}\nFile: ${selectedFile?.name}`);
+    }
+    
+    setShowUploadForm(false);
+    setUploadImage("");
+    setUploadDescription("");
+    setSelectedFile(null);
+    setPreviewUrl("");
+    setUploadMethod("url");
+  };
+
   const handleNext = () => {
     if (selectedImage !== null && selectedImage < filteredPhotos.length - 1) {
       setSelectedImage(selectedImage + 1);
@@ -103,7 +159,7 @@ export default function SitePhotos() {
               <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="/">Home</a>
               <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="/#about">About</a>
               <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="/#services">Services</a>
-              <a className="text-sm font-medium text-accent dark:text-accent transition-colors" href="/site-photos">Site Photos</a>
+              <a className="text-sm font-medium text-accent dark:text-accent transition-colors" href="/site-photos">Our Projects</a>
               <a className="text-sm font-medium hover:text-accent dark:hover:text-accent transition-colors" href="/#contact">Contact</a>
             </nav>
 
@@ -140,7 +196,7 @@ export default function SitePhotos() {
                 <a className="text-sm font-medium hover:text-accent transition-colors" href="/">Home</a>
                 <a className="text-sm font-medium hover:text-accent transition-colors" href="/#about">About</a>
                 <a className="text-sm font-medium hover:text-accent transition-colors" href="/#services">Services</a>
-                <a className="text-sm font-medium text-accent" href="/site-photos">Site Photos</a>
+                <a className="text-sm font-medium text-accent" href="/site-photos">Our Projects</a>
                 <a className="text-sm font-medium hover:text-accent transition-colors" href="/#contact">Contact</a>
                 <a href="https://wa.me/919930866851" className="flex items-center justify-center gap-2 rounded h-10 px-6 bg-[#25D366] text-white text-sm font-bold mt-2">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +215,7 @@ export default function SitePhotos() {
         <div className="mx-auto max-w-7xl flex flex-col">
           {/* Page Heading */}
           <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
-            <h1 className="font-playfair text-5xl font-bold text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">Site Photos</h1>
+            <h1 className="font-playfair text-5xl font-bold text-text-light dark:text-text-dark md:text-6xl lg:text-7xl">Our Projects</h1>
             <p className="max-w-xl text-base text-text-light/70 dark:text-text-dark/70">A collection of real spaces designed and captured by Bindu Designs.</p>
             <div className="mt-2 h-0.5 w-24 bg-accent"></div>
           </div>
@@ -179,6 +235,17 @@ export default function SitePhotos() {
                 {filter}
               </button>
             ))}
+            
+            {/* Add Photo Button for Admin */}
+            <button
+              onClick={() => setShowAdminLogin(true)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-md hover:bg-primary/90 transition-all hover:scale-110"
+              title="Add New Photos (Admin Only)"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
           </div>
 
           {/* Image Grid */}
@@ -231,6 +298,237 @@ export default function SitePhotos() {
           </div>
         </div>
       </footer>
+
+      {/* Admin Login Modal */}
+      {showAdminLogin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md rounded-xl bg-white dark:bg-gray-900 p-8 shadow-2xl">
+            <button
+              onClick={() => setShowAdminLogin(false)}
+              className="absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-6 text-center">Admin Login</h2>
+            
+            <form onSubmit={handleAdminLogin} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Username</label>
+                <input
+                  type="text"
+                  value={adminUsername}
+                  onChange={(e) => setAdminUsername(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Enter admin username"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Password</label>
+                <input
+                  type="password"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Enter admin password"
+                  required
+                />
+              </div>
+              
+              <button
+                type="submit"
+                className="w-full py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Upload Form Modal */}
+      {showUploadForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-2xl rounded-xl bg-white dark:bg-gray-900 p-8 shadow-2xl my-8">
+            <button
+              onClick={() => setShowUploadForm(false)}
+              className="absolute -top-4 -right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-text-light dark:text-text-dark shadow-lg transition-transform hover:scale-110"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold text-text-light dark:text-text-dark mb-6 text-center">Upload New Photo</h2>
+            
+            <form onSubmit={handleUploadSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Category</label>
+                <select
+                  value={uploadCategory}
+                  onChange={(e) => setUploadCategory(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                >
+                  <option value="Living Room">Living Room</option>
+                  <option value="Bedroom">Bedroom</option>
+                  <option value="Kitchen">Kitchen</option>
+                  <option value="Before">Before</option>
+                  <option value="After">After</option>
+                  <option value="3D Designs">3D Designs</option>
+                </select>
+              </div>
+              
+              {/* Upload Method Toggle */}
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-3">Upload Method</label>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUploadMethod("url");
+                      setSelectedFile(null);
+                      setPreviewUrl("");
+                    }}
+                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
+                      uploadMethod === "url"
+                        ? "bg-primary text-white"
+                        : "bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark hover:bg-neutral/30"
+                    }`}
+                  >
+                    Image URL
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUploadMethod("file");
+                      setUploadImage("");
+                    }}
+                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
+                      uploadMethod === "file"
+                        ? "bg-primary text-white"
+                        : "bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark hover:bg-neutral/30"
+                    }`}
+                  >
+                    Upload from Device
+                  </button>
+                </div>
+              </div>
+              
+              {/* URL Input */}
+              {uploadMethod === "url" && (
+                <div>
+                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Image URL</label>
+                  <input
+                    type="url"
+                    value={uploadImage}
+                    onChange={(e) => setUploadImage(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="https://example.com/image.jpg"
+                    required
+                  />
+                  <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-1">Enter the URL of the image you want to upload</p>
+                </div>
+              )}
+              
+              {/* File Upload */}
+              {uploadMethod === "file" && (
+                <div>
+                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Select Image from Device</label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileSelect}
+                      className="hidden"
+                      id="fileInput"
+                      required
+                    />
+                    <label
+                      htmlFor="fileInput"
+                      className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-neutral/50 rounded-lg cursor-pointer hover:border-primary transition-all bg-white dark:bg-gray-800"
+                    >
+                      <div className="text-center">
+                        <svg className="mx-auto h-12 w-12 text-text-light/50 dark:text-text-dark/50 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        {selectedFile ? (
+                          <p className="text-sm text-primary font-medium">{selectedFile.name}</p>
+                        ) : (
+                          <>
+                            <p className="text-sm text-text-light dark:text-text-dark font-medium">Click to upload image</p>
+                            <p className="text-xs text-text-light/70 dark:text-text-dark/70 mt-1">PNG, JPG, GIF up to 10MB</p>
+                          </>
+                        )}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              )}
+              
+              <div>
+                <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Description</label>
+                <textarea
+                  value={uploadDescription}
+                  onChange={(e) => setUploadDescription(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-neutral/50 bg-white dark:bg-gray-800 text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none"
+                  placeholder="Enter a brief description of the photo"
+                  required
+                />
+              </div>
+              
+              {uploadImage && uploadMethod === "url" && uploadImage.trim() !== "" && uploadImage.startsWith('http') && (
+                <div>
+                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Preview</label>
+                  <div className="relative w-full h-48 rounded-lg overflow-hidden bg-neutral/20 dark:bg-gray-800">
+                    <Image
+                      src={uploadImage}
+                      alt="Preview"
+                      fill
+                      className="object-cover"
+                      onError={() => alert("Invalid image URL")}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {previewUrl && uploadMethod === "file" && (
+                <div>
+                  <label className="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Preview</label>
+                  <div className="relative w-full h-48 rounded-lg overflow-hidden bg-neutral/20 dark:bg-gray-800">
+                    <Image
+                      src={previewUrl}
+                      alt="Preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowUploadForm(false)}
+                  className="flex-1 py-3 bg-neutral/20 dark:bg-gray-800 text-text-light dark:text-text-dark rounded-lg font-semibold hover:bg-neutral/30 dark:hover:bg-gray-700 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                >
+                  Upload Photo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Photo Modal */}
       {selectedImage !== null && (
