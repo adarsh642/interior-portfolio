@@ -97,7 +97,7 @@ export default function Home() {
           <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Column: Content */}
             <div className="flex flex-col items-start gap-8 text-left">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 animate-fade-in-left">
                 <h1 className="font-(family-name:--font-playfair) text-off-white text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-lg">
                   Transforming Spaces with Elegance
                 </h1>
@@ -107,7 +107,7 @@ export default function Home() {
               </div>
               
               {/* Stats Section */}
-              <div className="flex flex-wrap gap-x-8 gap-y-4 pt-4">
+              <div className="flex flex-wrap gap-x-8 gap-y-4 pt-4 animate-fade-in-up animation-delay-200">
                 <div className="flex flex-col gap-1">
                   <p className="text-primary text-3xl font-bold leading-tight">10+</p>
                   <p className="text-light-grey text-sm font-medium leading-normal">Years Experience</p>
@@ -123,7 +123,7 @@ export default function Home() {
               </div>
               
               {/* Buttons Section */}
-              <div className="flex flex-wrap gap-4 pt-6">
+              <div className="flex flex-wrap gap-4 pt-6 animate-fade-in-up animation-delay-400">
                 <a href="https://wa.me/919930866851" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-[#25D366] text-white text-base font-bold leading-normal tracking-[0.015em] transition-all hover:brightness-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -135,10 +135,10 @@ export default function Home() {
             
             {/* Right Column: Image Cards */}
             <div className="relative hidden lg:flex items-center justify-center h-[500px]">
-              <div className="absolute w-[60%] h-[70%] top-0 right-0 transform rotate-6 transition-transform group-hover:rotate-3">
+              <div className="absolute w-[60%] h-[70%] top-0 right-0 transform rotate-6 transition-transform group-hover:rotate-3 animate-fade-in-right animation-delay-300">
                 <div className="w-full h-full bg-cover bg-center rounded-xl shadow-2xl shadow-black/30" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1Jiiz6tcqyalq-dk5qfyOW2TxYvkDvIiECzlWqqHL7ZAmdwfJX0pArizIPbx_D8I9rlNWJoAeyiaicX9e2l3KayUeJFZU8G5TbaaLtiTVgS8XhOafYSKuhvyMx_zgGAlmoDrL_LmxN6uUT90wkzOUb7oQexhagYU-A_gOfXwNbAu2RETmIWbrUTqA-uBOlFfoCGqpmGL8xcnx3uDHQYPfURK0bea9dxKcePxbAf2SfmV0VSjQB5HuCZtr0Igl5FNPHrwdIsAMp9Ld')" }} />
               </div>
-              <div className="absolute w-[70%] h-[80%] bottom-0 left-0 transform -rotate-3 transition-transform group-hover:-rotate-1">
+              <div className="absolute w-[70%] h-[80%] bottom-0 left-0 transform -rotate-3 transition-transform group-hover:-rotate-1 animate-fade-in-right animation-delay-500">
                 <div className="w-full h-full bg-cover bg-center rounded-xl shadow-2xl shadow-black/30" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuALChZMIq1bhFRavsYsMKJLWmSmZfskDG0O5R0NZkZS-fNGJZI0uGgQAtEO3HqTf0l5KGteSR_TMC9-y5iljXdn4jkcr4K4cCefispYloD6exTHGxWqfRqh72A1cZ1bQ8Wsg7dZFQTKbSApZvTwNjy-aGOjXSW4KW_aqIRNp3D3BJhJfVFrHSDHv0VaDBYgtUdL1BZhf7ABAAARb45T-7nneajFgJLuVPpQ3UdFASWGMwXE_x4yLa6kdPTQV6JCeBOTsTrJvRltfFDy')" }} />
               </div>
             </div>
@@ -149,33 +149,33 @@ export default function Home() {
       {/* Services Section */}
       <section id="services" className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-fade-in-up">
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold tracking-tight text-text-light dark:text-text-dark sm:text-5xl">Our Services</h2>
             <p className="mt-4 text-lg text-text-light/70 dark:text-text-dark/70">Crafting unique environments that reflect your personality and style.</p>
           </div>
           <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-shadow">
+            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-all hover:scale-105 animate-scale-in animation-delay-100">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 text-accent">
                 <span className="material-symbols-outlined text-3xl">cottage</span>
               </div>
               <h3 className="text-xl font-bold font-[family-name:var(--font-cormorant)]">Residential Interiors</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Creating beautiful and functional living spaces tailored to you.</p>
             </div>
-            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-shadow">
+            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-all hover:scale-105 animate-scale-in animation-delay-200">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 text-accent">
                 <span className="material-symbols-outlined text-3xl">domain</span>
               </div>
               <h3 className="text-xl font-bold font-[family-name:var(--font-cormorant)]">Commercial Interiors</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Designing inspiring and productive environments for your business.</p>
             </div>
-            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-shadow">
+            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-all hover:scale-105 animate-scale-in animation-delay-300">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 text-accent">
                 <span className="material-symbols-outlined text-3xl">construction</span>
               </div>
               <h3 className="text-xl font-bold font-[family-name:var(--font-cormorant)]">Renovation</h3>
               <p className="text-sm text-text-light/70 dark:text-text-dark/70">Breathing new life into existing spaces with thoughtful updates.</p>
             </div>
-            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-shadow">
+            <div className="flex flex-col gap-4 rounded border border-neutral/50 bg-white/30 dark:bg-primary/20 dark:border-neutral/20 p-6 text-center shadow-sm hover:shadow-lg transition-all hover:scale-105 animate-scale-in animation-delay-400">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 text-accent">
                 <span className="material-symbols-outlined text-3xl">view_in_ar</span>
               </div>
@@ -189,12 +189,12 @@ export default function Home() {
       {/* Featured Projects Section */}
       <section className="bg-neutral/30 dark:bg-primary/10 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-fade-in-up">
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold tracking-tight text-text-light dark:text-text-dark sm:text-5xl">Featured Projects</h2>
             <p className="mt-4 text-lg text-text-light/70 dark:text-text-dark/70">A glimpse into our world of bespoke interior design.</p>
           </div>
           <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div className="group relative overflow-hidden rounded-xl shadow-lg h-[450px]">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg h-[450px] animate-fade-in-up animation-delay-100 hover:shadow-2xl transition-all duration-500">
               <Image
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHKPIM4YES0Yz6Z9CPqaxTVfo2dZYnXEsCaD5oPB50Eq8R3a8AbbKaYwnqCX05favaPrMSQnOo9J4rbapa8MDCEKapnzilBiQU0sDbPYLKVrL7lAfmSu3kC9ZSB6ld5KXrJX7Q-653urgPRBfnVKJoAO4wC_apO1kA-m8Dex_vB07YAAr3gO969XGAQj8W0ro9UbrrSANW4aHzxnRmzLaPOLO9c8fpkzVnpH0u1RTi-cl-0a_cNfeuFs-kiQJOL7g0U__YyqK60mEy"
@@ -208,7 +208,7 @@ export default function Home() {
                 <p className="text-sm text-neutral">Aspen, Colorado</p>
               </div>
             </div>
-            <div className="group relative overflow-hidden rounded-xl shadow-lg lg:col-span-2 h-[450px]">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg lg:col-span-2 h-[450px] animate-fade-in-up animation-delay-200 hover:shadow-2xl transition-all duration-500">
               <Image
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGRwlokyHDABnS97LIllEpIn7PvRm5h1XRFspE7iJ_iADyOzGmEHxqNij4dPa-dshaF7kBqSenG3Xjn_VfSh4dehq2Xv0b5svWZ-YTx9b4A-bW6uXZZyIIAJZXNoHNDQ65TNMtzHLU1DctMg2oA_KRbVRECtTBfa8fM3bZ5XNulltgn9_xebrog3J-qt4zbGDwUjdkpSHvWkkLzvU86fuQMQA4bqWoNsp9ztZmCepaW5pOXxPywXLBqdwH2PXr-uUrkLKQovknU8GR"
@@ -222,7 +222,7 @@ export default function Home() {
                 <p className="text-sm text-neutral">Stockholm, Sweden</p>
               </div>
             </div>
-            <div className="group relative overflow-hidden rounded-xl shadow-lg lg:col-span-2 h-[450px]">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg lg:col-span-2 h-[450px] animate-fade-in-up animation-delay-300 hover:shadow-2xl transition-all duration-500">
               <Image
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaG5noQ_eGOVaAIHkGEfR4di4FNmfBkOnAzKW6UXqvunS0a96KudLgGtAm3xVJWFt-NVpER13j9gJWAOMEAH2-e_K8Y3dxG1v0iFNCp61P2AB5e3DKLK8kuUGGRfkrNFmYKS6RDsPiZUCTEDUiJ-12lF9T8AoNNZw6X97GiJ_h4VHNHizNsdAQBXqtyN7wm4qX_L3-2g0GCM6GCF1x-p-Fn_GSijypzeMgyDzlAUPbTuA3Ur_n5KSstMDwClTpSQ-IHYaiPHLU5Dbo"
@@ -236,7 +236,7 @@ export default function Home() {
                 <p className="text-sm text-neutral">Kyoto, Japan</p>
               </div>
             </div>
-            <div className="group relative overflow-hidden rounded-xl shadow-lg h-[450px]">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg h-[450px] animate-fade-in-up animation-delay-400 hover:shadow-2xl transition-all duration-500">
               <Image
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm_QoI5DPg8NyCgUj0EKHjxioM11o73gFGWWExj9NYMPexUgwRpWx4YPugOj7eD7P0LUMPPfFME-tm1i8RJV-WlXh6OxibuFQ6basQ0VijygHeLKkhZneH4u2LEcme5j7xXS7-HpNGCx5y44VQ1UFaYkkTwLVt7zLzexBq8G8i0IDlQKt7D50XTqHSIYxLQkkwHrA3voP8uh2tY4hKOZuTcnQoHskOf0lrPRe_v8ShVqQ5cl8PP8Q2Oo9pmDMfgXsuYzdmVH6XW144"
@@ -257,12 +257,12 @@ export default function Home() {
       {/* Process Section */}
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-fade-in-up">
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold tracking-tight sm:text-5xl">Our Process</h2>
             <p className="mt-4 text-lg text-text-light/70 dark:text-text-dark/70">A seamless journey from concept to creation.</p>
           </div>
           <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-4">
-            <div className="text-center">
+            <div className="text-center animate-fade-in-up animation-delay-100">
               <div className="relative mb-4">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent text-grey shadow-lg">
                   <span className="text-2xl font-bold">1</span>
@@ -271,7 +271,7 @@ export default function Home() {
               <h3 className="mt-4 font-[family-name:var(--font-cormorant)] text-xl font-bold">Consultation</h3>
               <p className="mt-2 text-sm text-text-light/70 dark:text-text-dark/70">Understanding your vision, needs, and lifestyle.</p>
             </div>
-            <div className="text-center">
+            <div className="text-center animate-fade-in-up animation-delay-200">
               <div className="relative mb-4">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent text-grey shadow-lg">
                   <span className="text-2xl font-bold">2</span>
@@ -280,7 +280,7 @@ export default function Home() {
               <h3 className="mt-4 font-[family-name:var(--font-cormorant)] text-xl font-bold">3D Concept</h3>
               <p className="mt-2 text-sm text-text-light/70 dark:text-text-dark/70">Bringing ideas to life with detailed visualizations.</p>
             </div>
-            <div className="text-center">
+            <div className="text-center animate-fade-in-up animation-delay-300">
               <div className="relative mb-4">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent text-grey shadow-lg">
                   <span className="text-2xl font-bold">3</span>
@@ -289,7 +289,7 @@ export default function Home() {
               <h3 className="mt-4 font-[family-name:var(--font-cormorant)] text-xl font-bold">Execution</h3>
               <p className="mt-2 text-sm text-text-light/70 dark:text-text-dark/70">Meticulous management from start to finish.</p>
             </div>
-            <div className="text-center">
+            <div className="text-center animate-fade-in-up animation-delay-400">
               <div className="relative mb-4">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent text-grey shadow-lg">
                   <span className="text-2xl font-bold">4</span>
@@ -305,7 +305,7 @@ export default function Home() {
       {/* Contact Us Section */}
       <section id="contact" className="bg-gradient-to-b from-white to-[#fcfbf8] dark:from-gray-900 dark:to-[#221d10] py-16 lg:py-24 border-b-2 border-accent/20">
         <div className="px-4 sm:px-6 lg:px-10 xl:px-40 max-w-[1200px] mx-auto">
-          <div className="text-center mb-8 lg:mb-10">
+          <div className="text-center mb-8 lg:mb-10 animate-fade-in-up">
             <h1 className="font-[family-name:var(--font-playfair)] text-[#1A2A44] dark:text-white text-4xl sm:text-5xl md:text-6xl font-bold">Contact Us</h1>
             <p className="text-[#9a864c] dark:text-gray-400 text-lg mt-3 max-w-xl mx-auto">Let's design your dream space together.</p>
           </div>
@@ -503,27 +503,27 @@ export default function Home() {
       <section className="w-full bg-background-light dark:bg-background-dark py-16 sm:py-20 lg:py-24 border-t border-neutral/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8 lg:gap-x-12">
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-scale-in animation-delay-100">
               <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">10+</p>
               <div className="mt-3 h-0.5 w-16 bg-primary"></div>
               <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Years Experience</p>
             </div>
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-scale-in animation-delay-200">
               <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">120+</p>
               <div className="mt-3 h-0.5 w-16 bg-primary"></div>
               <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Completed Projects</p>
             </div>
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center animate-scale-in animation-delay-300">
               <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">100+</p>
               <div className="mt-3 h-0.5 w-16 bg-primary"></div>
               <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Happy Clients</p>
             </div>
-            <div className="flex flex-col items-center text-center sm:col-start-1 lg:col-start-auto lg:col-span-1 lg:col-start-2">
+            <div className="flex flex-col items-center text-center sm:col-start-1 lg:col-start-auto lg:col-span-1 lg:col-start-2 animate-scale-in animation-delay-400">
               <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">15k+</p>
               <div className="mt-3 h-0.5 w-16 bg-primary"></div>
               <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">3D Models Designed</p>
             </div>
-            <div className="flex flex-col items-center text-center lg:col-span-1">
+            <div className="flex flex-col items-center text-center lg:col-span-1 animate-scale-in animation-delay-500">
               <p className="font-[family-name:var(--font-cormorant)] text-5xl font-bold text-text-light dark:text-text-dark sm:text-6xl">98%</p>
               <div className="mt-3 h-0.5 w-16 bg-primary"></div>
               <p className="mt-4 text-base font-medium text-text-light/70 dark:text-text-dark/70">Client Satisfaction</p>
@@ -535,11 +535,11 @@ export default function Home() {
       {/* Visit Our Design Studio Section */}
       <section className="bg-white dark:bg-gray-900 py-16 lg:py-24">
         <div className="px-4 sm:px-6 lg:px-10 xl:px-40 max-w-[1200px] mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in-up">
             <h3 className="font-[family-name:var(--font-playfair)] text-[#1A2A44] dark:text-white text-4xl sm:text-5xl font-bold">Our Location</h3>
             <p className="text-[#9a864c] dark:text-gray-400 text-lg mt-3 max-w-xl mx-auto">Come see our latest designs and discuss your project in person</p>
           </div>
-          <div className="w-full h-80 lg:h-96 rounded-xl overflow-hidden shadow-xl">
+          <div className="w-full h-80 lg:h-96 rounded-xl overflow-hidden shadow-xl animate-scale-in animation-delay-200">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.0686779345804!2d79.04441007522133!3d21.145771980523745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c7271b0ecccb%3A0xe60d01b8c59c8b41!2sLaxmi%20Nagar%2C%20Nagpur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1732011000000!5m2!1sen!2sin" 
               width="100%" 
@@ -561,7 +561,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
         
         <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl animate-fade-in-up">
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold text-white sm:text-5xl lg:text-6xl leading-tight">
               Let&apos;s Design Your Dream Space
             </h2>
@@ -599,12 +599,12 @@ export default function Home() {
       {/* Connect With Us Section */}
       <section className="bg-background-light dark:bg-background-dark py-16 sm:py-20 lg:py-24 border-t border-neutral/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in-up">
             <h2 className="font-[family-name:var(--font-cormorant)] text-4xl font-bold text-text-light dark:text-text-dark sm:text-5xl">Connect With Us</h2>
             <p className="mt-4 text-lg text-text-light/70 dark:text-text-dark/70">Follow us on social media for inspiration and updates</p>
           </div>
           
-          <div className="flex justify-center items-center gap-6 sm:gap-8">
+          <div className="flex justify-center items-center gap-6 sm:gap-8 animate-scale-in animation-delay-200">
             {/* Facebook */}
             <a href="#" className="group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Facebook">
               <svg className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
