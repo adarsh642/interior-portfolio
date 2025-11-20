@@ -436,9 +436,9 @@ export default function SitePhotos() {
                 </div>
                 
                 {/* Image Specifications */}
-                <div className="mt-2 p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                  <p className="text-xs font-medium text-blue-900 dark:text-blue-200 mb-0.5">📐 Recommended Image Specifications:</p>
-                  <ul className="text-xs text-blue-800 dark:text-blue-300 space-y-0.5">
+                <div className="mt-2 p-2 rounded-lg bg-white dark:bg-gray-800 border border-neutral/20 dark:border-gray-700">
+                  <p className="text-xs font-medium text-text-light dark:text-text-dark mb-0.5">Recommended Image Specifications:</p>
+                  <ul className="text-xs text-text-light/70 dark:text-text-dark/70 space-y-0.5">
                     <li>• <strong>Aspect Ratio:</strong> 4:3 or 16:9 (e.g., 1600x1200px or 1920x1080px)</li>
                     <li>• <strong>Minimum Size:</strong> 1200x900px for best quality</li>
                     <li>• <strong>File Format:</strong> JPG, PNG, or WebP</li>
