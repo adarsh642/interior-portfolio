@@ -411,17 +411,23 @@
     --color-red-700: #bf000f;
     --color-red-800: #9f0712;
     --color-red-900: #82181a;
+    --color-orange-400: #ff8b1a;
+    --color-orange-600: #f05100;
     --color-yellow-400: #fac800;
     --color-yellow-500: #edb200;
     --color-green-50: #f0fdf4;
     --color-green-100: #dcfce7;
     --color-green-200: #b9f8cf;
     --color-green-300: #7bf1a8;
+    --color-green-400: #05df72;
     --color-green-500: #00c758;
+    --color-green-600: #00a544;
     --color-green-700: #008138;
     --color-green-800: #016630;
     --color-green-900: #0d542b;
+    --color-blue-50: #eff6ff;
     --color-blue-100: #dbeafe;
+    --color-blue-200: #bedbff;
     --color-blue-300: #90c5ff;
     --color-blue-700: #1447e6;
     --color-blue-800: #193cb8;
@@ -515,17 +521,23 @@
       --color-red-700: lab(40.4273% 67.2623 53.7441);
       --color-red-800: lab(33.7174% 55.8993 41.0293);
       --color-red-900: lab(28.5139% 44.5539 29.0463);
+      --color-orange-400: lab(70.0429% 42.5156 75.8207);
+      --color-orange-600: lab(57.1026% 64.2584 89.8886);
       --color-yellow-400: lab(83.2664% 8.65132 106.895);
       --color-yellow-500: lab(76.3898% 14.5258 98.4589);
       --color-green-50: lab(98.1563% -5.60117 2.75913);
       --color-green-100: lab(96.186% -13.8464 6.52362);
       --color-green-200: lab(92.4222% -26.4702 12.9427);
       --color-green-300: lab(86.9953% -47.2691 25.0054);
+      --color-green-400: lab(78.503% -64.9265 39.7492);
       --color-green-500: lab(70.5521% -66.5147 45.8072);
+      --color-green-600: lab(59.0978% -58.6621 41.2579);
       --color-green-700: lab(47.0329% -47.0239 31.4788);
       --color-green-800: lab(37.4616% -36.7971 22.9692);
       --color-green-900: lab(30.797% -29.6927 17.382);
+      --color-blue-50: lab(96.492% -1.14647 -5.11479);
       --color-blue-100: lab(92.0301% -2.24757 -11.6453);
+      --color-blue-200: lab(86.15% -4.04379 -21.0797);
       --color-blue-300: lab(77.5052% -6.4629 -36.42);
       --color-blue-700: lab(36.9089% 35.0961 -85.6872);
       --color-blue-800: lab(30.2514% 27.7854 -70.2699);
@@ -1488,6 +1500,10 @@
     }
   }
 
+  .border-blue-200 {
+    border-color: var(--color-blue-200);
+  }
+
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
@@ -1584,6 +1600,10 @@
     .bg-black\/70 {
       background-color: color-mix(in oklab, var(--color-black) 70%, transparent);
     }
+  }
+
+  .bg-blue-50 {
+    background-color: var(--color-blue-50);
   }
 
   .bg-blue-100 {
@@ -1922,6 +1942,10 @@
     padding-block: calc(var(--spacing) * 20);
   }
 
+  .pt-3 {
+    padding-top: calc(var(--spacing) * 3);
+  }
+
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
   }
@@ -2151,6 +2175,10 @@
     color: var(--color-gray-900);
   }
 
+  .text-green-600 {
+    color: var(--color-green-600);
+  }
+
   .text-green-700 {
     color: var(--color-green-700);
   }
@@ -2169,6 +2197,10 @@
 
   .text-off-white {
     color: var(--color-off-white);
+  }
+
+  .text-orange-600 {
+    color: var(--color-orange-600);
   }
 
   .text-primary {
@@ -2998,6 +3030,12 @@
   }
 
   @media (prefers-color-scheme: dark) {
+    .dark\:border-blue-800 {
+      border-color: var(--color-blue-800);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
     .dark\:border-gray-600 {
       border-color: var(--color-gray-600);
     }
@@ -3047,6 +3085,18 @@
     @supports (color: color-mix(in lab, red, red)) {
       .dark\:bg-background-dark\/95 {
         background-color: color-mix(in oklab, var(--color-background-dark) 95%, transparent);
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark\:bg-blue-900\/20 {
+      background-color: #1c398e33;
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .dark\:bg-blue-900\/20 {
+        background-color: color-mix(in oklab, var(--color-blue-900) 20%, transparent);
       }
     }
   }
@@ -3284,6 +3334,18 @@
   @media (prefers-color-scheme: dark) {
     .dark\:text-green-300 {
       color: var(--color-green-300);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark\:text-green-400 {
+      color: var(--color-green-400);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark\:text-orange-400 {
+      color: var(--color-orange-400);
     }
   }
 

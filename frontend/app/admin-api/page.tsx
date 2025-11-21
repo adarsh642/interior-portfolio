@@ -154,6 +154,22 @@ export default function AdminAPI() {
     }
   };
 
+  const handleGetEnquiries = async () => {
+    setLoading(true);
+    setError("");
+    setResponse(null);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/enquiries`);
+      const data = await res.json();
+      setResponse(data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -197,6 +213,7 @@ export default function AdminAPI() {
               {[
                 { id: "test-email", label: "Test Email" },
                 { id: "enquiry", label: "Test Enquiry" },
+                { id: "get-enquiries", label: "View Enquiries" },
                 { id: "photos", label: "Get Photos" },
                 { id: "login", label: "Test Login" },
                 { id: "review", label: "Submit Review" },
@@ -339,6 +356,82 @@ export default function AdminAPI() {
                 >
                   {loading ? "Fetching..." : "Get Photos"}
                 </button>
+              </div>
+            )}
+
+            {/* Get Enquiries Tab */}
+            {activeTab === "get-enquiries" && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  View All Enquiries
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  See all enquiries submitted through the contact form (saved in database).
+                </p>
+                <button
+                  onClick={handleGetEnquiries}
+                  disabled={loading}
+                  className="bg-[#D4AF8B] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? "Fetching..." : "Get All Enquiries"}
+                </button>
+                {response && response.enquiries && (
+                  <div className="mt-4">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+                      <p className="text-blue-800 dark:text-blue-300 font-semibold">
+                        Total Enquiries: {response.count}
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      {response.enquiries.map((enq: any) => (
+                        <div
+                          key={enq._id}
+                          className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm"
+                        >
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Name</p>
+                              <p className="font-semibold text-gray-900 dark:text-white">{enq.name}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Email</p>
+                              <p className="font-semibold text-gray-900 dark:text-white">{enq.email}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Phone</p>
+                              <p className="font-semibold text-gray-900 dark:text-white">{enq.phone}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Project Type</p>
+                              <p className="font-semibold text-gray-900 dark:text-white">{enq.projectType}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Budget</p>
+                              <p className="font-semibold text-gray-900 dark:text-white">{enq.budgetRange || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                              <p className={`font-semibold ${enq.emailSent ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400'}`}>
+                                {enq.emailSent ? '✅ Email Sent' : '⏳ Email Pending'}
+                              </p>
+                            </div>
+                          </div>
+                          {enq.message && (
+                            <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Message</p>
+                              <p className="text-gray-900 dark:text-white mt-1">{enq.message}</p>
+                            </div>
+                          )}
+                          <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              Submitted: {new Date(enq.createdAt).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
