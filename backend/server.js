@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const connectDB = require("./db");
 const Review = require("./models/Review");
 const Photo = require("./models/Photo");
+const Enquiry = require("./models/Enquiry");
 const cloudinary = require("./cloudinary");
 
 const app = express();
@@ -249,17 +250,66 @@ app.post("/api/enquiry", async (req, res) => {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
-
-    return res.json({
-      success: true,
-      message: "Enquiry successfully sent!",
+    // Save to database first (so we don't lose enquiries)
+    const enquiry = await Enquiry.create({
+      name,
+      email,
+      phone,
+      projectType,
+      budgetRange,
+      message,
+      emailSent: false
     });
+
+    // Try to send email with timeout handling
+    try {
+      await Promise.race([
+        transporter.sendMail(mailOptions),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Email timeout')), 15000)
+        )
+      ]);
+      
+      // Update enquiry as email sent
+      enquiry.emailSent = true;
+      await enquiry.save();
+      
+      return res.json({
+        success: true,
+        message: "Enquiry successfully sent! We'll contact you soon.",
+      });
+    } catch (emailError) {
+      console.error("Email Error:", emailError.message);
+      
+      // Still return success to user since we saved their enquiry to database
+      return res.json({
+        success: true,
+        message: "Enquiry received! We'll contact you soon.",
+      });
+    }
   } catch (err) {
-    console.error("Email Error:", err.message);
+    console.error("Enquiry Error:", err.message);
     return res.status(500).json({
       success: false,
-      message: "Failed to send enquiry.",
+      message: "Failed to process enquiry. Please try again.",
+    });
+  }
+});
+
+// Get all enquiries endpoint (for admin)
+app.get("/api/enquiries", async (req, res) => {
+  try {
+    const enquiries = await Enquiry.find().sort({ createdAt: -1 });
+    return res.json({
+      success: true,
+      enquiries,
+      count: enquiries.length
+    });
+  } catch (err) {
+    console.error("Fetch enquiries error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch enquiries.",
     });
   }
 });
