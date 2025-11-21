@@ -43,7 +43,7 @@ export default function Home() {
     setFormStatus({ type: "", message: "" });
 
     try {
-      const response = await fetch("http://localhost:4000/api/enquiry", {
+      const response = await fetch("https://interior-portfolio.onrender.com/api/enquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/review", {
+      const response = await fetch("https://interior-portfolio.onrender.com/api/review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export default function Home() {
   const fetchReviews = async () => {
     try {
       setLoadingReviews(true);
-      const response = await fetch("http://localhost:4000/api/reviews");
+      const response = await fetch("https://interior-portfolio.onrender.com/api/reviews");
       const data = await response.json();
       if (response.ok && data.success) {
         setReviews(data.reviews);

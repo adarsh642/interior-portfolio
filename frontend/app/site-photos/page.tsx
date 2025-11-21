@@ -44,7 +44,7 @@ export default function SitePhotos() {
   const fetchPhotos = async () => {
     try {
       setLoadingPhotos(true);
-      const response = await fetch('http://localhost:4000/api/photos');
+      const response = await fetch('https://interior-portfolio.onrender.com/api/photos');
       const data = await response.json();
       
       if (response.ok && data.success) {
@@ -73,7 +73,7 @@ export default function SitePhotos() {
     }
 
     try {
-      const response = await fetch(`http://localhost:4000/api/photos/${photoId}`, {
+      const response = await fetch(`https://interior-portfolio.onrender.com/api/photos/${photoId}`, {
         method: 'DELETE',
       });
 
@@ -145,7 +145,7 @@ export default function SitePhotos() {
       formData.append('areaWidth', areaWidth);
       formData.append('measurementUnit', measurementUnit);
 
-      const response = await fetch('http://localhost:4000/api/upload', {
+      const response = await fetch('https://interior-portfolio.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
       });

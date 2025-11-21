@@ -33,7 +33,7 @@ export default function AdminAPI() {
     review: "This is a test review message.",
   });
 
-  const API_BASE_URL = "http://localhost:4000";
+  const API_BASE_URL = "https://interior-portfolio.onrender.com";
 
   const handleTestEmail = async () => {
     setLoading(true);
